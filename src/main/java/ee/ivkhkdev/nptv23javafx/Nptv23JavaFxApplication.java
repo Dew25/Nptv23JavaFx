@@ -13,6 +13,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class Nptv23JavaFxApplication extends Application {
     public static ConfigurableApplicationContext applicationContext;
+    public static Stage primaryStage;
 
     public static void main(String[] args) {
         applicationContext = SpringApplication.run(Nptv23JavaFxApplication.class, args);
@@ -20,14 +21,15 @@ public class Nptv23JavaFxApplication extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage primaryStage) throws Exception {
+        this.primaryStage = primaryStage;
         SpringFXMLLoader springFXMLLoader = applicationContext.getBean(SpringFXMLLoader.class);
         FXMLLoader fxmlLoader = springFXMLLoader.load("/main/mainForm.fxml");
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Nptv23JavaFX Библиотека");
-        stage.centerOnScreen();
-        stage.show();
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Nptv23JavaFX Библиотека");
+        primaryStage.centerOnScreen();
+        primaryStage.show();
     }
 }
