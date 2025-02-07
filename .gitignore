@@ -1,3 +1,5 @@
+ntpv23javafxdb.mv.db
+ntpv23javafxdb.trace.db
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar

@@ -1,11 +1,14 @@
 package ee.ivkhkdev.nptv23javafx.model.entity;
 
 import jakarta.persistence.*;
+import javafx.collections.ObservableArray;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Author {
+public class Author implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -13,7 +16,7 @@ public class Author {
     private String lastname;
     @ManyToMany(mappedBy = "authors",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Book> books;
+    private Set<Book> books = new HashSet<>();
 
     public Author() {
     }

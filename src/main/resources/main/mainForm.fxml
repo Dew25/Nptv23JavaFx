@@ -6,13 +6,14 @@
 
 <VBox fx:id="vbMainFormRoot" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controller.MainFormController">
    <children>
-      <TableView prefHeight="426.0" prefWidth="600.0">
+      <TableView fx:id="tvListBooks" prefHeight="426.0" prefWidth="600.0">
         <columns>
-          <TableColumn prefWidth="47.0" text="Id" />
-          <TableColumn prefWidth="236.0" text="Название книги" />
-          <TableColumn prefWidth="148.0" text="Авторы" />
-          <TableColumn prefWidth="86.0" text="Количество" />
-          <TableColumn prefWidth="82.0" text="В наличии" />
+          <TableColumn fx:id="tcId" prefWidth="47.0" text="Id" />
+          <TableColumn fx:id="tcTitle" prefWidth="193.99998474121094" text="Название книги" />
+          <TableColumn fx:id="tcAuthors" prefWidth="83.66665649414062" text="Авторы" />
+          <TableColumn fx:id="tcPublicationYear" prefWidth="92.66665649414062" text="Количество" />
+            <TableColumn fx:id="tcQuantity" prefWidth="90.0" text="Количество" />
+          <TableColumn fx:id="tcCount" prefWidth="90.66665649414062" text="В наличии" />
         </columns>
       </TableView>
    </children>

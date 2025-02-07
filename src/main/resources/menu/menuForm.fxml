@@ -12,7 +12,7 @@
         <menus>
           <Menu mnemonicParsing="false" text="Книги">
             <items>
-              <MenuItem mnemonicParsing="false" text="Добавить книгу" />
+              <MenuItem mnemonicParsing="false" onAction="#showBookForm" text="Добавить книгу" />
                   <MenuItem mnemonicParsing="false" onAction="#showAuthorForm" text="Добавить автора" />
                   <MenuItem mnemonicParsing="false" text="Список книг" />
             </items>
