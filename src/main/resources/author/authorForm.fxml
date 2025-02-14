@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox fx:id="vbAuthorFormRoot" prefHeight="236.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controller.AuthorFormController">
    <children>
       <Label alignment="CENTER" prefHeight="89.0" prefWidth="600.0" text="Новый автор">
@@ -36,14 +35,15 @@
             <TextField fx:id="tfLastname" prefHeight="25.0" prefWidth="308.0" />
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="127.0" prefHeight="58.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="127.0" prefHeight="58.0" prefWidth="600.0" spacing="5.0">
          <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0">
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="154.0">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
             <Button mnemonicParsing="false" onAction="#create" prefHeight="25.0" prefWidth="125.0" text="Добавить" />
+            <Button mnemonicParsing="false" onAction="#goToMainForm" prefHeight="25.0" prefWidth="146.0" text="Возврат на главную" />
          </children>
       </HBox>
    </children>

@@ -39,6 +39,9 @@ public class AuthorFormController implements Initializable {
         authorService.add(author);
         loadMainForm();
     }
+    @FXML private void goToMainForm() throws IOException {
+        loadMainForm();
+    }
     private void loadMainForm() throws IOException {
         FXMLLoader fxmlLoader = springFXMLLoader.load("/main/mainForm.fxml");
         Parent root = fxmlLoader.load();

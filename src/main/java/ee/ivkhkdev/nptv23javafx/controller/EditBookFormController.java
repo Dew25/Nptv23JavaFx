@@ -7,7 +7,6 @@ import ee.ivkhkdev.nptv23javafx.service.AuthorService;
 import ee.ivkhkdev.nptv23javafx.service.BookService;
 import ee.ivkhkdev.nptv23javafx.tools.SpringFXMLLoader;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,34 +22,35 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Set;
-@Component
-public class NewBookFormController implements Initializable {
 
+@Component
+public class EditBookFormController implements Initializable {
     private SpringFXMLLoader springFXMLLoader;
     private BookService bookService;
     private AuthorService auhtorService;
+    private Book editBook;
 
+    @FXML private TextField tfId;
     @FXML private TextField tfTitle;
     @FXML private ListView<Author> lvAuthors;
     @FXML private TextField tfPublicationYear;
     @FXML private TextField tfQuantity;
+    @FXML private TextField tfCount;
 
-    public NewBookFormController(SpringFXMLLoader springFXMLLoader, BookService bookService, AuthorService authorService) {
+
+    public EditBookFormController(SpringFXMLLoader springFXMLLoader, BookService bookService, AuthorService authorService) {
         this.springFXMLLoader = springFXMLLoader;
         this.bookService = bookService;
         this.auhtorService = authorService;
     }
-    @FXML private void create() throws IOException {
-        Book book = new Book();
-        book.setTitle(tfTitle.getText());
-        book.getAuthors().addAll(lvAuthors.getSelectionModel().getSelectedItems());
-        book.setPublicationYear(Integer.parseInt(tfPublicationYear.getText()));
-        book.setQuantity(Integer.parseInt(tfQuantity.getText()));
-        book.setCount(book.getQuantity());
-        bookService.create(book);
+    @FXML private void goEdit() throws IOException {
+        editBook.setTitle(tfTitle.getText());
+        editBook.getAuthors().addAll(lvAuthors.getSelectionModel().getSelectedItems());
+        editBook.setPublicationYear(Integer.parseInt(tfPublicationYear.getText()));
+        editBook.setQuantity(Integer.parseInt(tfQuantity.getText()));
+        editBook.setCount(editBook.getQuantity());
+        bookService.create(editBook);
         loadMainForm();
     }
     private void loadMainForm() throws IOException {
@@ -67,6 +67,15 @@ public class NewBookFormController implements Initializable {
     }
     private Stage getPrimaryStage(){
         return Nptv23JavaFxApplication.primaryStage;
+    }
+    public void setEditBook(Book editBook) {
+        this.editBook = editBook;
+        tfId.setText(editBook.getId().toString());
+        tfTitle.setText(editBook.getTitle());
+        tfPublicationYear.setText(((Integer) editBook.getPublicationYear()).toString());
+        tfQuantity.setText(((Integer) editBook.getQuantity()).toString());
+        tfCount.setText(((Integer) editBook.getCount()).toString());
+
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

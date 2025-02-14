@@ -1,19 +1,27 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
+import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.service.BookService;
 import ee.ivkhkdev.nptv23javafx.tools.SpringFXMLLoader;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
+
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +41,7 @@ public class MainFormController implements Initializable {
     @FXML private TableColumn<Book, String> tcPublicationYear;
     @FXML private TableColumn<Book, String> tcQuantity;
     @FXML private TableColumn<Book, String> tcCount;
+    @FXML private HBox hbEditBook;
 
 
     public MainFormController(SpringFXMLLoader springFXMLLoader, BookService bookService) {
@@ -40,7 +49,26 @@ public class MainFormController implements Initializable {
         this.bookService = bookService;
     }
 
-    @Override
+    @FXML private void showEditBookForm() {
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/book/editBookForm.fxml");
+        try {
+            Parent editBookFormRoot = fxmlLoader.load();
+            EditBookFormController editBookFormController = fxmlLoader.getController();
+            editBookFormController.setEditBook(tvListBooks.getSelectionModel().getSelectedItem());
+            Scene scene = new Scene(editBookFormRoot);
+            getPrimaryStage().setTitle("Nptv23JavaFX Библиотека - Редактирование книги");
+            getPrimaryStage().setScene(scene);
+            getPrimaryStage().setResizable(false);
+            getPrimaryStage().centerOnScreen();
+            getPrimaryStage().show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private Stage getPrimaryStage(){
+        return Nptv23JavaFxApplication.primaryStage;
+    }
+        @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FXMLLoader fxmlLoader = springFXMLLoader.load("/menu/menuForm.fxml");
         try {
@@ -66,7 +94,14 @@ public class MainFormController implements Initializable {
         tcPublicationYear.setCellValueFactory(new PropertyValueFactory<>("publicationYear"));
         tcQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         tcCount.setCellValueFactory(new PropertyValueFactory<>("count"));
-
+        tvListBooks.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Book>() {
+            @Override
+            public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
+                if (newValue != null) {
+                    hbEditBook.setVisible(true);
+                }
+            }
+        });
 
     }
 }
