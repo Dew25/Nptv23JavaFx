@@ -5,6 +5,7 @@ import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.service.AuthorService;
 import ee.ivkhkdev.nptv23javafx.service.BookService;
+import ee.ivkhkdev.nptv23javafx.service.FormService;
 import ee.ivkhkdev.nptv23javafx.tools.SpringFXMLLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
@@ -29,7 +30,7 @@ import java.util.Set;
 @Component
 public class NewBookFormController implements Initializable {
 
-    private SpringFXMLLoader springFXMLLoader;
+    private FormService formService;
     private BookService bookService;
     private AuthorService auhtorService;
 
@@ -38,12 +39,12 @@ public class NewBookFormController implements Initializable {
     @FXML private TextField tfPublicationYear;
     @FXML private TextField tfQuantity;
 
-    public NewBookFormController(SpringFXMLLoader springFXMLLoader, BookService bookService, AuthorService authorService) {
-        this.springFXMLLoader = springFXMLLoader;
+    public NewBookFormController(FormService formService, BookService bookService, AuthorService authorService) {
+        this.formService = formService;
         this.bookService = bookService;
         this.auhtorService = authorService;
     }
-    @FXML private void create() throws IOException {
+    @FXML private void create(){
         Book book = new Book();
         book.setTitle(tfTitle.getText());
         book.getAuthors().addAll(lvAuthors.getSelectionModel().getSelectedItems());
@@ -51,23 +52,13 @@ public class NewBookFormController implements Initializable {
         book.setQuantity(Integer.parseInt(tfQuantity.getText()));
         book.setCount(book.getQuantity());
         bookService.create(book);
-        loadMainForm();
+        formService.loadMainForm();
     }
-    private void loadMainForm() throws IOException {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/main/mainForm.fxml");
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        getPrimaryStage().setScene(scene);
-        getPrimaryStage().setTitle("Nptv23JavaFX Библиотека");
-        getPrimaryStage().centerOnScreen();
-        getPrimaryStage().show();
+
+    @FXML private void goToMainForm(){
+        formService.loadMainForm();
     }
-    @FXML private void goToMainForm() throws IOException {
-        loadMainForm();
-    }
-    private Stage getPrimaryStage(){
-        return Nptv23JavaFxApplication.primaryStage;
-    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lvAuthors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

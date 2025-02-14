@@ -5,6 +5,7 @@ import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.service.AuthorService;
 import ee.ivkhkdev.nptv23javafx.service.BookService;
+import ee.ivkhkdev.nptv23javafx.service.FormService;
 import ee.ivkhkdev.nptv23javafx.tools.SpringFXMLLoader;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -26,7 +27,7 @@ import java.util.ResourceBundle;
 
 @Component
 public class EditBookFormController implements Initializable {
-    private SpringFXMLLoader springFXMLLoader;
+    private FormService formService;
     private BookService bookService;
     private AuthorService auhtorService;
     private Book editBook;
@@ -39,8 +40,8 @@ public class EditBookFormController implements Initializable {
     @FXML private TextField tfCount;
 
 
-    public EditBookFormController(SpringFXMLLoader springFXMLLoader, BookService bookService, AuthorService authorService) {
-        this.springFXMLLoader = springFXMLLoader;
+    public EditBookFormController( FormService formService, BookService bookService, AuthorService authorService) {
+        this.formService = formService;
         this.bookService = bookService;
         this.auhtorService = authorService;
     }
@@ -51,23 +52,13 @@ public class EditBookFormController implements Initializable {
         editBook.setQuantity(Integer.parseInt(tfQuantity.getText()));
         editBook.setCount(editBook.getQuantity());
         bookService.create(editBook);
-        loadMainForm();
+        formService.loadMainForm();
     }
-    private void loadMainForm() throws IOException {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/main/mainForm.fxml");
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        getPrimaryStage().setScene(scene);
-        getPrimaryStage().setTitle("Nptv23JavaFX Библиотека");
-        getPrimaryStage().centerOnScreen();
-        getPrimaryStage().show();
-    }
+
     @FXML private void goToMainForm() throws IOException {
-        loadMainForm();
+        formService.loadMainForm();
     }
-    private Stage getPrimaryStage(){
-        return Nptv23JavaFxApplication.primaryStage;
-    }
+
     public void setEditBook(Book editBook) {
         this.editBook = editBook;
         tfId.setText(editBook.getId().toString());

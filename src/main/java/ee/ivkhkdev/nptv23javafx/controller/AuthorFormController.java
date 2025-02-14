@@ -3,6 +3,7 @@ package ee.ivkhkdev.nptv23javafx.controller;
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.service.AuthorService;
+import ee.ivkhkdev.nptv23javafx.service.FormService;
 import ee.ivkhkdev.nptv23javafx.tools.SpringFXMLLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,13 +23,13 @@ import java.util.ResourceBundle;
 @Component
 public class AuthorFormController implements Initializable {
 
-    private SpringFXMLLoader springFXMLLoader;
+    private FormService formService;
     private AuthorService authorService;
     @FXML private TextField tfFirstname;
     @FXML private TextField tfLastname;
 
-    public AuthorFormController(SpringFXMLLoader springFXMLLoader, AuthorService authorService) {
-        this.springFXMLLoader = springFXMLLoader;
+    public AuthorFormController(FormService formService, AuthorService authorService) {
+        this.formService = formService;
         this.authorService = authorService;
     }
 
@@ -37,23 +38,12 @@ public class AuthorFormController implements Initializable {
         author.setFirstname(tfFirstname.getText());
         author.setLastname(tfLastname.getText());
         authorService.add(author);
-        loadMainForm();
+        formService.loadMainForm();
     }
     @FXML private void goToMainForm() throws IOException {
-        loadMainForm();
+        formService.loadMainForm();
     }
-    private void loadMainForm() throws IOException {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/main/mainForm.fxml");
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        getPrimaryStage().setScene(scene);
-        getPrimaryStage().setTitle("Nptv23JavaFX Библиотека");
-        getPrimaryStage().centerOnScreen();
-        getPrimaryStage().show();
-    }
-    private Stage getPrimaryStage(){
-        return Nptv23JavaFxApplication.primaryStage;
-    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
