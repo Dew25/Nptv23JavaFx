@@ -19,8 +19,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Пользователь">
             <items>
-              <MenuItem mnemonicParsing="false" text="Вход" />
-                  <MenuItem mnemonicParsing="false" text="Выход" />
+              <MenuItem mnemonicParsing="false" onAction="#showLoginForm" text="Вход" />
+                  <MenuItem mnemonicParsing="false" onAction="#logout" text="Выход" />
                   <MenuItem mnemonicParsing="false" text="Профиль" />
             </items>
           </Menu>

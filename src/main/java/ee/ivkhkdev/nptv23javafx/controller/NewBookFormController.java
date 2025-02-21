@@ -71,7 +71,7 @@ public class NewBookFormController implements Initializable {
                 if (empty || author == null) {
                     setText(null);
                 } else {
-                    setText("ID: " + author.getId() + " - " + author.getFirstname() + " " + author.getLastname());
+                    setText(author.getId() + ". " + author.getFirstname() + " " + author.getLastname());
                 }
             }
         });

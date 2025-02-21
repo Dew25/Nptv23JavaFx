@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx;
 
+import ee.ivkhkdev.nptv23javafx.service.FormService;
 import ee.ivkhkdev.nptv23javafx.tools.SpringFXMLLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,13 +25,7 @@ public class Nptv23JavaFxApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        SpringFXMLLoader springFXMLLoader = applicationContext.getBean(SpringFXMLLoader.class);
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/main/mainForm.fxml");
-        Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Nptv23JavaFX Библиотека");
-        primaryStage.centerOnScreen();
-        primaryStage.show();
+        FormService formService = applicationContext.getBean(FormService.class);
+        formService.loadLoginForm();
     }
 }

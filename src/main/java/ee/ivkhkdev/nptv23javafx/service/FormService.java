@@ -19,6 +19,20 @@ public class FormService {
     public FormService(SpringFXMLLoader springFXMLLoader) {
         this.springFXMLLoader = springFXMLLoader;
     }
+    public void loadLoginForm(){
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/user/loginForm.fxml");
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(root);
+        getPrimaryStage().setScene(scene);
+        getPrimaryStage().setTitle("Nptv23JavaFX вход пользователя");
+        getPrimaryStage().centerOnScreen();
+        getPrimaryStage().show();
+    }
     public void loadMainForm(){
         FXMLLoader fxmlLoader = springFXMLLoader.load("/main/mainForm.fxml");
         Parent root = null;
@@ -74,6 +88,19 @@ public class FormService {
     }
     public void loadAuthorForm(){
         FXMLLoader fxmlLoader = springFXMLLoader.load("/author/AuthorForm.fxml");
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene = new Scene(root);
+        getPrimaryStage().setScene(scene);
+        getPrimaryStage().setTitle("Создание нового пользователя");
+    }
+
+    public void loadRegistrationForm() {
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/user/registrationForm.fxml");
         Parent root = null;
         try {
             root = fxmlLoader.load();

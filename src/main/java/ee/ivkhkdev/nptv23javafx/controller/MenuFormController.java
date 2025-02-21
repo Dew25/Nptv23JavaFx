@@ -1,6 +1,7 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
+import ee.ivkhkdev.nptv23javafx.service.AppUserService;
 import ee.ivkhkdev.nptv23javafx.service.FormService;
 import ee.ivkhkdev.nptv23javafx.tools.SpringFXMLLoader;
 import javafx.fxml.FXML;
@@ -23,10 +24,15 @@ public class MenuFormController {
     @FXML private void showAuthorForm(){
         formService.loadAuthorForm();
     }
-    @FXML private void showBookForm() throws IOException {
+    @FXML private void showBookForm() {
         formService.loadNewBookForm();
     }
-    private Stage getPrimaryStage() {
-        return Nptv23JavaFxApplication.primaryStage;
+    @FXML private void showLoginForm(){
+        formService.loadLoginForm();
     }
+    @FXML private void logout(){
+        AppUserService.currentUser = null;
+        formService.loadLoginForm();
+    }
+
 }
