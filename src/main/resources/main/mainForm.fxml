@@ -14,7 +14,7 @@
           <TableColumn fx:id="tcId" prefWidth="47.0" text="Id" />
           <TableColumn fx:id="tcTitle" prefWidth="193.99998474121094" text="Название книги" />
           <TableColumn fx:id="tcAuthors" prefWidth="83.66665649414062" text="Авторы" />
-          <TableColumn fx:id="tcPublicationYear" prefWidth="92.66665649414062" text="Количество" />
+          <TableColumn fx:id="tcPublicationYear" prefWidth="92.66665649414062" text="Год издания" />
             <TableColumn fx:id="tcQuantity" prefWidth="90.0" text="Количество" />
           <TableColumn fx:id="tcCount" prefWidth="90.66665649414062" text="В наличии" />
         </columns>

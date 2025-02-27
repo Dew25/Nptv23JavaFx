@@ -2,11 +2,13 @@ package ee.ivkhkdev.nptv23javafx.service;
 
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.controller.EditBookFormController;
+import ee.ivkhkdev.nptv23javafx.controller.SelectedBookFromController;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.tools.SpringFXMLLoader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Service;
 
@@ -110,5 +112,23 @@ public class FormService {
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Создание нового пользователя");
+    }
+
+    public void loadSelectedBookFormModality(Book book) {
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/book/selectedBookForm.fxml");
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+            SelectedBookFromController selectedBookFromController = fxmlLoader.getController();
+            selectedBookFromController.setBook(book);
+            // Создаем модальное окно
+            Stage stage = new Stage();
+            stage.setTitle("Информация о книге");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -13,6 +13,21 @@ public class AppUserService {
     private AppUserRepository repository;
     public AppUserService(AppUserRepository repository) {
         this.repository = repository;
+        initSuperUser();
+    }
+    private void initSuperUser(){
+        if(repository.count()>0){
+            return;
+        }
+        AppUser admin = new AppUser();
+        admin.setUsername("admin");
+        admin.setPassword("12345");
+        admin.setFirstname("Admin");
+        admin.setLastname("SuperAdmin");
+        admin.getRoles().add(ROLES.ADMINISTRATOR.toString());
+        admin.getRoles().add(ROLES.MANAGER.toString());
+        admin.getRoles().add(ROLES.USER.toString());
+        repository.save(admin);
     }
     public void add(AppUser user) {
         repository.save(user);

@@ -1,6 +1,8 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
+import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
+import ee.ivkhkdev.nptv23javafx.service.AppUserService;
 import ee.ivkhkdev.nptv23javafx.service.BookService;
 import ee.ivkhkdev.nptv23javafx.service.FormService;
 import javafx.beans.property.SimpleStringProperty;
@@ -43,9 +45,13 @@ public class MainFormController implements Initializable {
     @FXML private void showEditBookForm() {
         formService.loadEditBookForm(tvListBooks.getSelectionModel().getSelectedItem());
     }
+    private void openBookDetails(Book book) {
+        formService.loadSelectedBookFormModality(book);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         vbMainFormRoot.getChildren().addFirst(formService.loadMenuForm());
         tvListBooks.setItems(bookService.getListBooks());
         tcId.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -68,10 +74,20 @@ public class MainFormController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
                 if (newValue != null) {
-                    hbEditBook.setVisible(true);
+                    if(AppUserService.currentUser.getRoles().contains(AppUserService.ROLES.MANAGER.toString())){
+                        hbEditBook.setVisible(true);
+                    }else{
+                        hbEditBook.setVisible(false);
+                    }
                 }
             }
         });
-
+         // Обработка двойного клика
+        tvListBooks.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && !tvListBooks.getSelectionModel().isEmpty()) {
+                Book selectedBook = tvListBooks.getSelectionModel().getSelectedItem();
+                openBookDetails(selectedBook);
+            }
+        });
     }
 }
