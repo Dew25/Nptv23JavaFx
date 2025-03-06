@@ -171,6 +171,7 @@ public class FormLoader {
             root = fxmlLoader.load();
             SelectedAuthorFormController selectedAuthorFormController = fxmlLoader.getController();
             selectedAuthorFormController.setAuthor(author);
+            selectedAuthorFormController.initAuthorForm();
             // Создаем модальное окно
             Stage stage = new Stage();
             stage.setTitle("Информация об авторе");
