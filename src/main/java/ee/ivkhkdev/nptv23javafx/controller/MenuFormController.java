@@ -40,6 +40,9 @@ public class MenuFormController implements Initializable {
         AppUserServiceImpl.currentUser = null;
         formLoader.loadLoginForm();
     }
+    @FXML private void showListAuthorsForm(){
+        formLoader.loadListAuthorForm();
+    }
     private void initMenuVisible(){
         if(AppUserServiceImpl.currentUser.getRoles().contains(AppUserServiceImpl.ROLES.ADMINISTRATOR.toString())){
             mBooks.setVisible(true);

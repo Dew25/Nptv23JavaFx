@@ -1,7 +1,9 @@
 package ee.ivkhkdev.nptv23javafx.service;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
+import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
+import ee.ivkhkdev.nptv23javafx.model.repository.AuthorRepository;
 import ee.ivkhkdev.nptv23javafx.model.repository.BookRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,13 +15,21 @@ import java.util.Optional;
 @Component
 public class BookServiceImpl implements BookService {
 
+    private final AuthorRepository authorRepository;
     private BookRepository bookRepository;
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
     }
 
-    public void create(Book book) {
-        bookRepository.save(book);
+    public Optional<Book> add(Book book) {
+        try {
+            Book addedBook = bookRepository.save(book);
+            return Optional.of(addedBook);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
@@ -28,11 +38,6 @@ public class BookServiceImpl implements BookService {
         ObservableList<Book> observableList = FXCollections.observableArrayList();
         observableList.addAll(this.getList());
         return observableList;
-    }
-
-    @Override
-    public Optional<Book> add(Book book) {
-        return Optional.empty();
     }
 
     @Override

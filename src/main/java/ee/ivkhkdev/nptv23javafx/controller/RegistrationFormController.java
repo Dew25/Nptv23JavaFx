@@ -5,12 +5,16 @@ import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 @Component
-public class RegistrationFormController {
+public class RegistrationFormController implements Initializable {
 
     private AppUserService appUserService;
     private FormLoader formLoader;
@@ -42,4 +46,12 @@ public class RegistrationFormController {
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        pfPassword.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                this.registration();
+            }
+        });
+    }
 }

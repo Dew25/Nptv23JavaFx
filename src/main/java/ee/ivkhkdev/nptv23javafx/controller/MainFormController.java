@@ -10,6 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -34,6 +35,7 @@ public class MainFormController implements Initializable {
     @FXML private TableColumn<Book, String> tcQuantity;
     @FXML private TableColumn<Book, String> tcCount;
     @FXML private HBox hbEditBook;
+    @FXML private Label lbInfo;
 
 
     public MainFormController(FormLoader formLoader, BookService bookService) {
@@ -48,10 +50,15 @@ public class MainFormController implements Initializable {
         formLoader.loadSelectedBookFormModality(book);
     }
 
+
+    public void setInfoMessage(String message){
+        lbInfo.setText(message);
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        //Добавляем форму меню первым элементом vbMainFormRoot
         vbMainFormRoot.getChildren().addFirst(formLoader.loadMenuForm());
+
         tvListBooks.setItems(bookService.getObservableList());
         tcId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tcTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -88,5 +95,6 @@ public class MainFormController implements Initializable {
                 openBookDetails(selectedBook);
             }
         });
+
     }
 }

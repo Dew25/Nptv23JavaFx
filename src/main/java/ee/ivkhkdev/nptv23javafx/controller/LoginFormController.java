@@ -4,13 +4,18 @@ import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 @Component
-public class LoginFormController {
+public class LoginFormController implements Initializable {
+
     private FormLoader formLoader;
     private AppUserService appUserService;
 
@@ -32,5 +37,13 @@ public class LoginFormController {
     }
     @FXML private void showRegistrationForm(){
         formLoader.loadRegistrationForm();
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        pfPassword.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+               this.login();
+            }
+        });
     }
 }

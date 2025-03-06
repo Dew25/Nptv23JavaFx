@@ -13,10 +13,18 @@ public class Author implements Serializable{
     private String firstname;
     private String lastname;
     @ManyToMany(mappedBy = "authors",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.EAGER)
     private Set<Book> books = new HashSet<>();
 
     public Author() {
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 
     public Long getId() {

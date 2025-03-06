@@ -2,6 +2,8 @@ package ee.ivkhkdev.nptv23javafx;
 
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,8 +20,9 @@ public class Nptv23JavaFxApplication extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
+
         FormLoader formLoader = applicationContext.getBean(FormLoader.class);
         formLoader.loadLoginForm();
     }

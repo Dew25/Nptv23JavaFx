@@ -9,10 +9,7 @@ import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.List;
@@ -25,6 +22,7 @@ public class NewBookFormController implements Initializable {
     private BookService bookService;
     private AuthorServiceImpl auhtorService;
 
+    @FXML private Label lbInfo;
     @FXML private TextField tfTitle;
     @FXML private ListView<Author> lvAuthors;
     @FXML private TextField tfPublicationYear;
@@ -37,6 +35,11 @@ public class NewBookFormController implements Initializable {
     }
     @FXML private void create(){
         Book book = new Book();
+        if(tfTitle.getText().isEmpty() || tfPublicationYear.getText().isEmpty()
+                || tfQuantity.getText().isEmpty() || lvAuthors.getSelectionModel().getSelectedItems().isEmpty()){
+            lbInfo.setText("Заполните все поля");
+            return;
+        }
         book.setTitle(tfTitle.getText());
         book.getAuthors().addAll(lvAuthors.getSelectionModel().getSelectedItems());
         book.setPublicationYear(Integer.parseInt(tfPublicationYear.getText()));
@@ -64,6 +67,11 @@ public class NewBookFormController implements Initializable {
                 } else {
                     setText(author.getId() + ". " + author.getFirstname() + " " + author.getLastname());
                 }
+            }
+        });
+        tfQuantity.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                this.create();
             }
         });
     }

@@ -11,11 +11,12 @@
 
 <VBox fx:id="vbAuthorFormRoot" prefHeight="379.0" prefWidth="628.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controller.NewBookFormController">
    <children>
-      <Label alignment="CENTER" prefHeight="89.0" prefWidth="600.0" text="Новая книга">
+      <Label alignment="BOTTOM_CENTER" prefHeight="59.0" prefWidth="600.0" text="Новая книга">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <Label fx:id="lbInfo" alignment="CENTER" prefHeight="28.0" prefWidth="628.0" />
       <HBox prefHeight="28.0" prefWidth="600.0">
          <children>
             <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Название">

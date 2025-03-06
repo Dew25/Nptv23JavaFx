@@ -40,7 +40,7 @@ public class EditBookFormController implements Initializable {
         this.bookService = bookService;
         this.auhtorService = authorService;
     }
-    @FXML private void goEdit() throws IOException {
+    @FXML private void goEdit(){
         editBook.setTitle(tfTitle.getText());
         editBook.getAuthors().addAll(lvAuthors.getSelectionModel().getSelectedItems());
         editBook.setPublicationYear(Integer.parseInt(tfPublicationYear.getText()));
@@ -50,7 +50,7 @@ public class EditBookFormController implements Initializable {
         formLoader.loadMainForm();
     }
 
-    @FXML private void goToMainForm() throws IOException {
+    @FXML private void goToMainForm() {
         formLoader.loadMainForm();
     }
 
@@ -77,6 +77,11 @@ public class EditBookFormController implements Initializable {
                 } else {
                     setText("ID: " + author.getId() + " - " + author.getFirstname() + " " + author.getLastname());
                 }
+            }
+        });
+        tfCount.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                this.goEdit();
             }
         });
     }

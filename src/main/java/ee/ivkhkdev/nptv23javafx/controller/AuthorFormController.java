@@ -7,8 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,19 +23,23 @@ public class AuthorFormController implements Initializable {
         this.authorService = authorService;
     }
 
-    @FXML private void create() throws IOException {
+    @FXML private void create(){
         Author author = new Author();
         author.setFirstname(tfFirstname.getText());
         author.setLastname(tfLastname.getText());
         authorService.add(author);
         formLoader.loadMainForm();
     }
-    @FXML private void goToMainForm() throws IOException {
+    @FXML private void goToMainForm() {
         formLoader.loadMainForm();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        tfLastname.setOnKeyPressed(event -> {
+            if (event.getCode().toString().equals("ENTER")) {
+                this.create();
+            }
+        });
     }
 }

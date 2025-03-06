@@ -2,11 +2,16 @@ package ee.ivkhkdev.nptv23javafx.tools;
 
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.controller.EditBookFormController;
+import ee.ivkhkdev.nptv23javafx.controller.ListAuthorsFormController;
+import ee.ivkhkdev.nptv23javafx.controller.SelectedAuthorFormController;
 import ee.ivkhkdev.nptv23javafx.controller.SelectedBookFromController;
+import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Service;
@@ -17,8 +22,10 @@ import java.io.IOException;
 public class FormLoader {
     private final SpringFXMLLoader springFXMLLoader;
 
+
     public FormLoader(SpringFXMLLoader springFXMLLoader) {
         this.springFXMLLoader = springFXMLLoader;
+
     }
     public void loadLoginForm(){
         FXMLLoader fxmlLoader = springFXMLLoader.load("/view/user/loginForm.fxml");
@@ -43,6 +50,20 @@ public class FormLoader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        getPrimaryStage().setOnCloseRequest(event -> {
+            // Можно показать диалог подтверждения перед закрытием
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Подтверждение");
+            alert.setHeaderText("Вы уверены, что хотите закрыть приложение?");
+            alert.setContentText("Нажмите ОК для закрытия или Отмена для продолжения.");
+
+            // Если пользователь нажимает "ОК", закрываем окно
+            if (alert.showAndWait().get() == javafx.scene.control.ButtonType.OK) {
+                Platform.exit(); // Закрываем приложение
+            } else {
+                event.consume(); // Отменяем событие закрытия (не закрываем окно)
+            }
+        });
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Nptv23JavaFX Библиотека");
@@ -122,6 +143,37 @@ public class FormLoader {
             // Создаем модальное окно
             Stage stage = new Stage();
             stage.setTitle("Информация о книге");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void loadListAuthorForm() {
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/author/listAuthorsForm.fxml");
+        Parent root;
+        try {
+            root = fxmlLoader.load();
+            ListAuthorsFormController listAuthorsFormController = fxmlLoader.getController();
+            Scene scene = new Scene(root);
+            getPrimaryStage().setScene(scene);
+            getPrimaryStage().setTitle("Список авторов");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void loadSelectedAuthorFormModality(Author author) {
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/author/selectedAuthorForm.fxml");
+        Parent root;
+        try {
+            root = fxmlLoader.load();
+            SelectedAuthorFormController selectedAuthorFormController = fxmlLoader.getController();
+            selectedAuthorFormController.setAuthor(author);
+            // Создаем модальное окно
+            Stage stage = new Stage();
+            stage.setTitle("Информация об авторе");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -14,7 +13,7 @@
             <items>
                 <MenuItem mnemonicParsing="false" onAction="#showBookForm" text="Добавить книгу" />
                 <MenuItem mnemonicParsing="false" onAction="#showAuthorForm" text="Добавить автора" />
-                <MenuItem mnemonicParsing="false" text="Список книг" />
+                  <MenuItem mnemonicParsing="false" onAction="#showListAuthorsForm" text="Список авторов" />
             </items>
           </Menu>
           <Menu fx:id="mUsers" mnemonicParsing="false" text="Пользователь">
@@ -27,6 +26,5 @@
           <Menu fx:id="mAdmin" mnemonicParsing="false" text="Administrator" />
         </menus>
       </MenuBar>
-      <Label alignment="CENTER" prefHeight="17.0" prefWidth="600.0" />
    </children>
 </VBox>
