@@ -1,7 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.model.entity;
 
 import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Arrays;

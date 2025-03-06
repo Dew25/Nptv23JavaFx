@@ -1,10 +1,10 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
-import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
+import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
-import ee.ivkhkdev.nptv23javafx.service.AppUserService;
-import ee.ivkhkdev.nptv23javafx.service.BookService;
-import ee.ivkhkdev.nptv23javafx.service.FormService;
+import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
+import ee.ivkhkdev.nptv23javafx.service.BookServiceImpl;
+import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,9 +23,8 @@ import java.util.stream.Collectors;
 @Component
 public class MainFormController implements Initializable {
 
-    private FormService formService;
+    private FormLoader formLoader;
     private BookService bookService;
-
     @FXML private VBox vbMainFormRoot;
     @FXML private TableView<Book> tvListBooks;
     @FXML private TableColumn<Book, String> tcId;
@@ -37,23 +36,23 @@ public class MainFormController implements Initializable {
     @FXML private HBox hbEditBook;
 
 
-    public MainFormController(FormService formService, BookService bookService) {
-        this.formService = formService;
+    public MainFormController(FormLoader formLoader, BookService bookService) {
+        this.formLoader = formLoader;
         this.bookService = bookService;
     }
 
     @FXML private void showEditBookForm() {
-        formService.loadEditBookForm(tvListBooks.getSelectionModel().getSelectedItem());
+        formLoader.loadEditBookForm(tvListBooks.getSelectionModel().getSelectedItem());
     }
     private void openBookDetails(Book book) {
-        formService.loadSelectedBookFormModality(book);
+        formLoader.loadSelectedBookFormModality(book);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        vbMainFormRoot.getChildren().addFirst(formService.loadMenuForm());
-        tvListBooks.setItems(bookService.getListBooks());
+        vbMainFormRoot.getChildren().addFirst(formLoader.loadMenuForm());
+        tvListBooks.setItems(bookService.getObservableList());
         tcId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tcTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         tcAuthors.setCellValueFactory(cellData -> {
@@ -74,7 +73,7 @@ public class MainFormController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
                 if (newValue != null) {
-                    if(AppUserService.currentUser.getRoles().contains(AppUserService.ROLES.MANAGER.toString())){
+                    if(AppUserServiceImpl.currentUser.getRoles().contains(AppUserServiceImpl.ROLES.MANAGER.toString())){
                         hbEditBook.setVisible(true);
                     }else{
                         hbEditBook.setVisible(false);

@@ -1,12 +1,7 @@
 package ee.ivkhkdev.nptv23javafx;
 
-import ee.ivkhkdev.nptv23javafx.service.FormService;
-import ee.ivkhkdev.nptv23javafx.tools.SpringFXMLLoader;
+import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,7 +20,7 @@ public class Nptv23JavaFxApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        FormService formService = applicationContext.getBean(FormService.class);
-        formService.loadLoginForm();
+        FormLoader formLoader = applicationContext.getBean(FormLoader.class);
+        formLoader.loadLoginForm();
     }
 }

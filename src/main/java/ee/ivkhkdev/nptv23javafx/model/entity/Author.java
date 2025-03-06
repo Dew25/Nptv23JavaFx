@@ -1,8 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.model.entity;
 
 import jakarta.persistence.*;
-import javafx.collections.ObservableArray;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

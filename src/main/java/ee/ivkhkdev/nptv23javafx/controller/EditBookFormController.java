@@ -1,23 +1,18 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
-import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
-import ee.ivkhkdev.nptv23javafx.service.AuthorService;
-import ee.ivkhkdev.nptv23javafx.service.BookService;
-import ee.ivkhkdev.nptv23javafx.service.FormService;
-import ee.ivkhkdev.nptv23javafx.tools.SpringFXMLLoader;
+import ee.ivkhkdev.nptv23javafx.service.AuthorServiceImpl;
+import ee.ivkhkdev.nptv23javafx.interfaces.AuthorService;
+import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
+import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -27,7 +22,7 @@ import java.util.ResourceBundle;
 
 @Component
 public class EditBookFormController implements Initializable {
-    private FormService formService;
+    private FormLoader formLoader;
     private BookService bookService;
     private AuthorService auhtorService;
     private Book editBook;
@@ -40,8 +35,8 @@ public class EditBookFormController implements Initializable {
     @FXML private TextField tfCount;
 
 
-    public EditBookFormController( FormService formService, BookService bookService, AuthorService authorService) {
-        this.formService = formService;
+    public EditBookFormController(FormLoader formLoader, BookService bookService, AuthorService authorService) {
+        this.formLoader = formLoader;
         this.bookService = bookService;
         this.auhtorService = authorService;
     }
@@ -51,12 +46,12 @@ public class EditBookFormController implements Initializable {
         editBook.setPublicationYear(Integer.parseInt(tfPublicationYear.getText()));
         editBook.setQuantity(Integer.parseInt(tfQuantity.getText()));
         editBook.setCount(editBook.getQuantity());
-        bookService.create(editBook);
-        formService.loadMainForm();
+        bookService.add(editBook);
+        formLoader.loadMainForm();
     }
 
     @FXML private void goToMainForm() throws IOException {
-        formService.loadMainForm();
+        formLoader.loadMainForm();
     }
 
     public void setEditBook(Book editBook) {
@@ -71,7 +66,7 @@ public class EditBookFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lvAuthors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        List<Author> authors = auhtorService.getListAuthors();
+        List<Author> authors = auhtorService.getList();
         lvAuthors.getItems().setAll(FXCollections.observableArrayList(authors));
         lvAuthors.setCellFactory(lv -> new ListCell<>() {
             @Override

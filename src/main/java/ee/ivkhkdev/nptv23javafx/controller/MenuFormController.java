@@ -1,12 +1,11 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
-import ee.ivkhkdev.nptv23javafx.service.AppUserService;
-import ee.ivkhkdev.nptv23javafx.service.FormService;
+import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
+import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.HBox;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -15,7 +14,7 @@ import java.util.ResourceBundle;
 @Component
 public class MenuFormController implements Initializable {
 
-    private FormService formService;
+    private FormLoader formLoader;
     @FXML private Menu mBooks;
     @FXML private Menu mAdmin;
     @FXML private Menu mUsers;
@@ -24,39 +23,39 @@ public class MenuFormController implements Initializable {
     @FXML private MenuItem miLogout;
 
 
-    public MenuFormController(FormService formService) {
-        this.formService = formService;
+    public MenuFormController(FormLoader formLoader) {
+        this.formLoader = formLoader;
     }
 
     @FXML private void showAuthorForm(){
-        formService.loadAuthorForm();
+        formLoader.loadAuthorForm();
     }
     @FXML private void showBookForm() {
-        formService.loadNewBookForm();
+        formLoader.loadNewBookForm();
     }
     @FXML private void showLoginForm(){
-        formService.loadLoginForm();
+        formLoader.loadLoginForm();
     }
     @FXML private void logout(){
-        AppUserService.currentUser = null;
-        formService.loadLoginForm();
+        AppUserServiceImpl.currentUser = null;
+        formLoader.loadLoginForm();
     }
     private void initMenuVisible(){
-        if(AppUserService.currentUser.getRoles().contains(AppUserService.ROLES.ADMINISTRATOR.toString())){
+        if(AppUserServiceImpl.currentUser.getRoles().contains(AppUserServiceImpl.ROLES.ADMINISTRATOR.toString())){
             mBooks.setVisible(true);
             mAdmin.setVisible(true);
             mUsers.setVisible(true);
             miEnter.setVisible(false);
             miProfile.setVisible(true);
             miLogout.setVisible(true);
-        }else if(AppUserService.currentUser.getRoles().contains(AppUserService.ROLES.MANAGER.toString())){
+        }else if(AppUserServiceImpl.currentUser.getRoles().contains(AppUserServiceImpl.ROLES.MANAGER.toString())){
             mBooks.setVisible(true);
             mAdmin.setVisible(false);
             mUsers.setVisible(true);
             miEnter.setVisible(false);
             miProfile.setVisible(true);
             miLogout.setVisible(true);
-        }else if(AppUserService.currentUser.getRoles().contains(AppUserService.ROLES.USER.toString())){
+        }else if(AppUserServiceImpl.currentUser.getRoles().contains(AppUserServiceImpl.ROLES.USER.toString())){
             mBooks.setVisible(false);
             mAdmin.setVisible(false);
             mUsers.setVisible(true);
