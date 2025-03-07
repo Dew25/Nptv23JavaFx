@@ -1,5 +1,7 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
+import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
+import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
@@ -58,10 +60,12 @@ public class MainFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Добавляем форму меню первым элементом vbMainFormRoot
         vbMainFormRoot.getChildren().addFirst(formLoader.loadMenuForm());
-
+        // Инициируем список книг
         tvListBooks.setItems(bookService.getObservableList());
+        // Настраиваем отображение полей книги в столбцах таблицы
         tcId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tcTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        // Авторы -> в строку преобразовыаем в виде Имя Фамилия
         tcAuthors.setCellValueFactory(cellData -> {
             Book book = cellData.getValue(); // Получаем объект Book из строки таблицы
             if (book.getAuthors() == null || book.getAuthors().isEmpty()) {
@@ -76,6 +80,8 @@ public class MainFormController implements Initializable {
         tcPublicationYear.setCellValueFactory(new PropertyValueFactory<>("publicationYear"));
         tcQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         tcCount.setCellValueFactory(new PropertyValueFactory<>("count"));
+        // Навешиваем на таблицу книг обработчик события клика мышкой
+        // (логика: при клике проверяет роль и показывает или скрывает HBox с кнопкой Редактировать)
         tvListBooks.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Book>() {
             @Override
             public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
@@ -88,11 +94,19 @@ public class MainFormController implements Initializable {
                 }
             }
         });
-         // Обработка двойного клика
+         // Обработка двойного клика -> показывает модальное окно с выбранной книгой
         tvListBooks.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && !tvListBooks.getSelectionModel().isEmpty()) {
                 Book selectedBook = tvListBooks.getSelectionModel().getSelectedItem();
-                openBookDetails(selectedBook);
+                try {
+                    openBookDetails(selectedBook);
+                    lbInfo.setText(selectedBook.getTitle() + " - выдана пользователю "
+                            + AppUserServiceImpl.currentUser.getFirstname()
+                            + " "
+                            + AppUserServiceImpl.currentUser.getLastname());
+                }catch (Exception e){
+                    lbInfo.setText(selectedBook.getTitle() + " - выдать не удалось");
+                }
             }
         });
 
