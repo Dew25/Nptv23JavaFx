@@ -51,7 +51,9 @@ public class MainFormController implements Initializable {
     private void openBookDetails(Book book) {
         formLoader.loadSelectedBookFormModality(book);
     }
-
+    public void iniTableView(){
+        tvListBooks.setItems(bookService.getObservableList());
+    }
 
     public void setInfoMessage(String message){
         lbInfo.setText(message);
@@ -86,7 +88,7 @@ public class MainFormController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
                 if (newValue != null) {
-                    if(AppUserServiceImpl.currentUser.getRoles().contains(AppUserServiceImpl.ROLES.MANAGER.toString())){
+                    if(Nptv23JavaFxApplication.currentUser.getRoles().contains(Nptv23JavaFxApplication.ROLES.MANAGER.toString())){
                         hbEditBook.setVisible(true);
                     }else{
                         hbEditBook.setVisible(false);
@@ -101,9 +103,9 @@ public class MainFormController implements Initializable {
                 try {
                     openBookDetails(selectedBook);
                     lbInfo.setText(selectedBook.getTitle() + " - выдана пользователю "
-                            + AppUserServiceImpl.currentUser.getFirstname()
+                            + Nptv23JavaFxApplication.currentUser.getFirstname()
                             + " "
-                            + AppUserServiceImpl.currentUser.getLastname());
+                            + Nptv23JavaFxApplication.currentUser.getLastname());
                 }catch (Exception e){
                     lbInfo.setText(selectedBook.getTitle() + " - выдать не удалось");
                 }

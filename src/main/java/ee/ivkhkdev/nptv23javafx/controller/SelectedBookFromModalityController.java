@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
+import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.interfaces.HistoryService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
@@ -10,15 +11,16 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 @Component
-public class SelectedBookFromController implements Initializable {
+public class SelectedBookFromModalityController implements Initializable {
     private HistoryService historyService;
     @FXML private VBox vbSelectedBookRoot;
     private Book book;
 
-    public SelectedBookFromController(HistoryService historyService) {
+    public SelectedBookFromModalityController(HistoryService historyService) {
         this.historyService = historyService;
     }
 
@@ -26,15 +28,11 @@ public class SelectedBookFromController implements Initializable {
         this.book = book;
     }
 
-    public Book getBook() {
-        return book;
-    }
     @FXML private void takeOnBook() {
         History history = new History();
-        if(book != null && book.getCount() > 0) {
-            book.setCount(book.getCount() - 1);
-        }
         history.setBook(book);
+        history.setUser(Nptv23JavaFxApplication.currentUser);
+        history.setTakeOnDate(LocalDate.now());
         try {
             historyService.add(history);
         }catch (Exception e) {

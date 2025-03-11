@@ -1,10 +1,7 @@
 package ee.ivkhkdev.nptv23javafx.tools;
 
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
-import ee.ivkhkdev.nptv23javafx.controller.EditBookFormController;
-import ee.ivkhkdev.nptv23javafx.controller.ListAuthorsFormController;
-import ee.ivkhkdev.nptv23javafx.controller.SelectedAuthorFormController;
-import ee.ivkhkdev.nptv23javafx.controller.SelectedBookFromController;
+import ee.ivkhkdev.nptv23javafx.controller.*;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import javafx.application.Platform;
@@ -15,7 +12,6 @@ import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
@@ -48,6 +44,8 @@ public class FormLoader {
         Parent root;
         try {
             root = fxmlLoader.load();
+            MainFormController controller = fxmlLoader.getController();
+            controller.iniTableView();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -135,11 +133,11 @@ public class FormLoader {
     }
 
     public void loadSelectedBookFormModality(Book book) {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/book/selectedBookForm.fxml");
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/book/selectedBookFormModality.fxml");
         Parent root;
         try {
             root = fxmlLoader.load();
-            SelectedBookFromController selectedBookFromController = fxmlLoader.getController();
+            SelectedBookFromModalityController selectedBookFromController = fxmlLoader.getController();
             selectedBookFromController.setBook(book);
             // Создаем модальное окно
             Stage stage = new Stage();
@@ -181,6 +179,19 @@ public class FormLoader {
             stage.showAndWait();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void loadTakedBookForm() {
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/book/takedBookForm.fxml");
+        Parent root;
+        try {
+            root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            getPrimaryStage().setScene(scene);
+            getPrimaryStage().setTitle("Список выданных книг");
+        } catch (IOException e) {
+                throw new RuntimeException(e);
         }
     }
 }

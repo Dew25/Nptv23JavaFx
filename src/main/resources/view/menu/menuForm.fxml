@@ -14,6 +14,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#showBookForm" text="Добавить книгу" />
                 <MenuItem mnemonicParsing="false" onAction="#showAuthorForm" text="Добавить автора" />
                   <MenuItem mnemonicParsing="false" onAction="#showListAuthorsForm" text="Список авторов" />
+                  <MenuItem mnemonicParsing="false" onAction="#showTakedBookForm" text="Списов выданных книг" />
             </items>
           </Menu>
           <Menu fx:id="mUsers" mnemonicParsing="false" text="Пользователь">

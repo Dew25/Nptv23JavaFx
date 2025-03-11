@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.service;
 
+import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.model.repository.AppUserRepository;
@@ -11,10 +12,6 @@ import java.util.Optional;
 @Service
 public class AppUserServiceImpl implements AppUserService {
 
-
-
-    public static AppUser currentUser;
-    public enum ROLES {USER, MANAGER, ADMINISTRATOR};
     private AppUserRepository repository;
     public AppUserServiceImpl(AppUserRepository repository) {
         this.repository = repository;
@@ -34,9 +31,9 @@ public class AppUserServiceImpl implements AppUserService {
         admin.setPassword("12345");
         admin.setFirstname("Admin");
         admin.setLastname("SuperAdmin");
-        admin.getRoles().add(ROLES.ADMINISTRATOR.toString());
-        admin.getRoles().add(ROLES.MANAGER.toString());
-        admin.getRoles().add(ROLES.USER.toString());
+        admin.getRoles().add(Nptv23JavaFxApplication.ROLES.ADMINISTRATOR.toString());
+        admin.getRoles().add(Nptv23JavaFxApplication.ROLES.MANAGER.toString());
+        admin.getRoles().add(Nptv23JavaFxApplication.ROLES.USER.toString());
         repository.save(admin);
     }
     @Override
@@ -53,7 +50,7 @@ public class AppUserServiceImpl implements AppUserService {
         if(!loginUser.getPassword().equals(password)) {
             return false;
         }
-        currentUser = loginUser;
+        Nptv23JavaFxApplication.currentUser = loginUser;
         return true;
     }
 }

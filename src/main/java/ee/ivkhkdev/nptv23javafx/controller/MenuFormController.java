@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
+import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
@@ -37,28 +38,31 @@ public class MenuFormController implements Initializable {
         formLoader.loadLoginForm();
     }
     @FXML private void logout(){
-        AppUserServiceImpl.currentUser = null;
+        Nptv23JavaFxApplication.currentUser = null;
         formLoader.loadLoginForm();
+    }
+    @FXML private void showTakedBookForm(){
+        formLoader.loadTakedBookForm();
     }
     @FXML private void showListAuthorsForm(){
         formLoader.loadListAuthorForm();
     }
     private void initMenuVisible(){
-        if(AppUserServiceImpl.currentUser.getRoles().contains(AppUserServiceImpl.ROLES.ADMINISTRATOR.toString())){
+        if(Nptv23JavaFxApplication.currentUser.getRoles().contains(Nptv23JavaFxApplication.ROLES.ADMINISTRATOR.toString())){
             mBooks.setVisible(true);
             mAdmin.setVisible(true);
             mUsers.setVisible(true);
             miEnter.setVisible(false);
             miProfile.setVisible(true);
             miLogout.setVisible(true);
-        }else if(AppUserServiceImpl.currentUser.getRoles().contains(AppUserServiceImpl.ROLES.MANAGER.toString())){
+        }else if(Nptv23JavaFxApplication.currentUser.getRoles().contains(Nptv23JavaFxApplication.ROLES.MANAGER.toString())){
             mBooks.setVisible(true);
             mAdmin.setVisible(false);
             mUsers.setVisible(true);
             miEnter.setVisible(false);
             miProfile.setVisible(true);
             miLogout.setVisible(true);
-        }else if(AppUserServiceImpl.currentUser.getRoles().contains(AppUserServiceImpl.ROLES.USER.toString())){
+        }else if(Nptv23JavaFxApplication.currentUser.getRoles().contains(Nptv23JavaFxApplication.ROLES.USER.toString())){
             mBooks.setVisible(false);
             mAdmin.setVisible(false);
             mUsers.setVisible(true);

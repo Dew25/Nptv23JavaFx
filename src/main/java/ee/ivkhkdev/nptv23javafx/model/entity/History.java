@@ -10,9 +10,9 @@ public class History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private AppUser user;
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Book book;
     @Temporal(TemporalType.DATE)
     private LocalDate takeOnDate;
@@ -79,7 +79,7 @@ public class History {
         return "History{" +
                 "id=" + id +
                 ", user=" + user.getFirstname() + " " + user.getLastname() +
-                ", book=" + book.getTitle() +
+                ", book=" + book.getTitle() + " " + book.getCount() +
                 ", takeOnDate=" + takeOnDate +
                 ", returnDate=" + returnDate +
                 '}';
