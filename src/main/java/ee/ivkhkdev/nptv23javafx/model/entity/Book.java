@@ -75,26 +75,19 @@ public class Book {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Book book = (Book) o;
-        return publicationYear == book.publicationYear && quantity == book.quantity && count == book.count && Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(authors, book.authors);
+        return publicationYear == book.publicationYear && quantity == book.quantity && Objects.equals(id, book.id) && Objects.equals(title, book.title) && Objects.equals(authors, book.authors);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, authors, publicationYear, quantity, count);
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", authors=" + Arrays.toString(authors.toArray()) +
-                ", publicationYear=" + publicationYear +
-                ", quantity=" + quantity +
-                ", count=" + count +
-                '}';
+        int result = Objects.hashCode(id);
+        result = 31 * result + Objects.hashCode(title);
+        result = 31 * result + Objects.hashCode(authors);
+        result = 31 * result + publicationYear;
+        result = 31 * result + quantity;
+        return result;
     }
 }

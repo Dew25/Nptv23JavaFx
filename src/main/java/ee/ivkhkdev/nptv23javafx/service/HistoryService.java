@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.service;
 
+import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
 import ee.ivkhkdev.nptv23javafx.model.repository.BookRepository;
@@ -45,5 +46,15 @@ private final HistoryRepository historyRepository;
             }
         }
         return observableList;
+    }
+
+    @Override
+    public boolean reading(Book book) {
+        return historyRepository.findAll().stream().anyMatch(h -> h.getBook().equals(book) && h.getReturnDate() == null);
+    }
+
+    @Override
+    public History findByBookAndUser(Book book, AppUser currentUser) {
+        return historyRepository.findByBookAndAppUser(book,currentUser);
     }
 }

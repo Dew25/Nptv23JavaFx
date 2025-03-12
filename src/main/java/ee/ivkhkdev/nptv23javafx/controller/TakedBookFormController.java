@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.net.URL;
 
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ResourceBundle;
 
 @Component
@@ -38,7 +39,11 @@ public class TakedBookFormController implements Initializable {
                 if (empty || history == null) {
                     setText(null);
                 } else {
-                    setText(history.getId().toString() + ". " + history.getBook().getTitle() + " " + ((Integer)history.getBook().getCount()).toString());
+                    setText(history.getId().toString() + ". " + history.getBook().getTitle()
+                            + ". Осталось в наличии: " + ((Integer)history.getBook().getCount()).toString()
+                            + ". Читает: "+ history.getAppUser().getFirstname() + " " + history.getAppUser().getLastname()
+                            + " Выдано: "+ history.getTakeOnDate().format(new DateTimeFormatterBuilder().appendPattern("dd.MM.yyyy").toFormatter())
+                    );
                 }
             }
         });

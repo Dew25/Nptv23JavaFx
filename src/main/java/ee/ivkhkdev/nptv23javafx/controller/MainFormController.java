@@ -1,11 +1,10 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
-import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
-import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
-import ee.ivkhkdev.nptv23javafx.service.BookServiceImpl;
+import ee.ivkhkdev.nptv23javafx.model.repository.HistoryRepository;
+import ee.ivkhkdev.nptv23javafx.service.CellFactoryService;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -28,6 +27,7 @@ public class MainFormController implements Initializable {
 
     private FormLoader formLoader;
     private BookService bookService;
+    private final CellFactoryService cellFactoryService;
     @FXML private VBox vbMainFormRoot;
     @FXML private TableView<Book> tvListBooks;
     @FXML private TableColumn<Book, String> tcId;
@@ -40,9 +40,10 @@ public class MainFormController implements Initializable {
     @FXML private Label lbInfo;
 
 
-    public MainFormController(FormLoader formLoader, BookService bookService) {
+    public MainFormController(FormLoader formLoader, BookService bookService, CellFactoryService cellFactoryService) {
         this.formLoader = formLoader;
         this.bookService = bookService;
+        this.cellFactoryService = cellFactoryService;
     }
 
     @FXML private void showEditBookForm() {
@@ -51,34 +52,21 @@ public class MainFormController implements Initializable {
     private void openBookDetails(Book book) {
         formLoader.loadSelectedBookFormModality(book);
     }
-    public void iniTableView(){
-        tvListBooks.setItems(bookService.getObservableList());
-    }
 
-    public void setInfoMessage(String message){
-        lbInfo.setText(message);
+    public void reloadTableView(){
+        tvListBooks.setItems(bookService.getObservableList());
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Добавляем форму меню первым элементом vbMainFormRoot
         vbMainFormRoot.getChildren().addFirst(formLoader.loadMenuForm());
         // Инициируем список книг
-        tvListBooks.setItems(bookService.getObservableList());
+        reloadTableView();
         // Настраиваем отображение полей книги в столбцах таблицы
         tcId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tcTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         // Авторы -> в строку преобразовыаем в виде Имя Фамилия
-        tcAuthors.setCellValueFactory(cellData -> {
-            Book book = cellData.getValue(); // Получаем объект Book из строки таблицы
-            if (book.getAuthors() == null || book.getAuthors().isEmpty()) {
-                return new SimpleStringProperty("");
-            }
-            // Преобразуем коллекцию авторов в строку
-            String authors = book.getAuthors().stream()
-                    .map(author -> author.getFirstname() + " " + author.getLastname())
-                    .collect(Collectors.joining(", "));
-            return new SimpleStringProperty(authors);
-        });
+        tcAuthors.setCellValueFactory(cellFactoryService.createAuthorsCellValueFactory());
         tcPublicationYear.setCellValueFactory(new PropertyValueFactory<>("publicationYear"));
         tcQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         tcCount.setCellValueFactory(new PropertyValueFactory<>("count"));
@@ -102,10 +90,12 @@ public class MainFormController implements Initializable {
                 Book selectedBook = tvListBooks.getSelectionModel().getSelectedItem();
                 try {
                     openBookDetails(selectedBook);
-                    lbInfo.setText(selectedBook.getTitle() + " - выдана пользователю "
-                            + Nptv23JavaFxApplication.currentUser.getFirstname()
-                            + " "
-                            + Nptv23JavaFxApplication.currentUser.getLastname());
+                    reloadTableView();
+                    lbInfo.setText(
+                        selectedBook.getTitle()
+                        + " - выдана пользователю " + Nptv23JavaFxApplication.currentUser.getFirstname()
+                        + " " + Nptv23JavaFxApplication.currentUser.getLastname()
+                    );
                 }catch (Exception e){
                     lbInfo.setText(selectedBook.getTitle() + " - выдать не удалось");
                 }

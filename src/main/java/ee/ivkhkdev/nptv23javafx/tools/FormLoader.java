@@ -45,7 +45,7 @@ public class FormLoader {
         try {
             root = fxmlLoader.load();
             MainFormController controller = fxmlLoader.getController();
-            controller.iniTableView();
+            controller.reloadTableView();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

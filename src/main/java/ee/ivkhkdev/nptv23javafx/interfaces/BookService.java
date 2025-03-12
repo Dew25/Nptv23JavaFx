@@ -5,4 +5,5 @@ import javafx.collections.ObservableList;
 
 public interface BookService extends AppService<Book> {
     ObservableList<Book> getObservableList();
+
 }

@@ -1,15 +1,17 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
+import ee.ivkhkdev.nptv23javafx.interfaces.AuthorService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
-import ee.ivkhkdev.nptv23javafx.service.AuthorServiceImpl;
-import ee.ivkhkdev.nptv23javafx.service.BookServiceImpl;
+
+import ee.ivkhkdev.nptv23javafx.service.CellFactoryService;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+
 import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.List;
@@ -20,18 +22,19 @@ public class NewBookFormController implements Initializable {
 
     private FormLoader formLoader;
     private BookService bookService;
-    private AuthorServiceImpl auhtorService;
-
+    private AuthorService authorService;
+    private final CellFactoryService cellFactoryService;
     @FXML private Label lbInfo;
     @FXML private TextField tfTitle;
     @FXML private ListView<Author> lvAuthors;
     @FXML private TextField tfPublicationYear;
     @FXML private TextField tfQuantity;
 
-    public NewBookFormController(FormLoader formLoader, BookService bookService, AuthorServiceImpl authorServiceImpl) {
+    public NewBookFormController(FormLoader formLoader, BookService bookService, AuthorService authorServiceImpl, CellFactoryService cellFactoryService) {
         this.formLoader = formLoader;
         this.bookService = bookService;
-        this.auhtorService = authorServiceImpl;
+        this.authorService = authorServiceImpl;
+        this.cellFactoryService = cellFactoryService;
     }
     @FXML private void create(){
         Book book = new Book();
@@ -56,19 +59,9 @@ public class NewBookFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lvAuthors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        List<Author> authors = auhtorService.getList();
+        List<Author> authors = authorService.getList();
         lvAuthors.getItems().setAll(FXCollections.observableArrayList(authors));
-        lvAuthors.setCellFactory(lv -> new ListCell<>() {
-            @Override
-            protected void updateItem(Author author, boolean empty) {
-                super.updateItem(author, empty);
-                if (empty || author == null) {
-                    setText(null);
-                } else {
-                    setText(author.getId() + ". " + author.getFirstname() + " " + author.getLastname());
-                }
-            }
-        });
+        lvAuthors.setCellFactory(cellFactoryService.createAuthorListCellFactory());
         tfQuantity.setOnKeyPressed(event -> {
             if (event.getCode().toString().equals("ENTER")) {
                 this.create();

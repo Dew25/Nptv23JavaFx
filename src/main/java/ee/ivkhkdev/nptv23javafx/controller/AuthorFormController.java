@@ -36,6 +36,7 @@ public class AuthorFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Навешиваем событие нажатия на Enter в контролле ftLastname
         tfLastname.setOnKeyPressed(event -> {
             if (event.getCode().toString().equals("ENTER")) {
                 this.create();

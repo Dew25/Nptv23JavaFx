@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="vbMainFormRoot" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controller.MainFormController">
+<VBox fx:id="vbMainFormRoot" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controller.MainFormController">
    <children>
-      <Label fx:id="lbInfo" prefHeight="17.0" prefWidth="639.0" />
+      <Label fx:id="lbInfo" alignment="CENTER" prefHeight="17.0" prefWidth="639.0" />
       <TableView fx:id="tvListBooks" prefHeight="426.0" prefWidth="600.0">
         <columns>
           <TableColumn fx:id="tcId" prefWidth="47.0" text="Id" />

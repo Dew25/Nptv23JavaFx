@@ -15,7 +15,7 @@
          </font>
       </Label>
       <Label fx:id="lbInfo" prefHeight="30.0" prefWidth="605.0" />
-      <ListView fx:id="lvAuthors" prefHeight="197.0" prefWidth="600.0" />
+      <ListView fx:id="lvListAuthors" prefHeight="197.0" prefWidth="600.0" />
       <VBox fx:id="vbListSelectedAuthorsBooks" prefHeight="103.0" prefWidth="600.0" visible="false">
          <children>
             <Label prefHeight="17.0" prefWidth="635.0" text="Книги выделенного автора">

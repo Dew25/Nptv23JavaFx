@@ -1,11 +1,14 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
+import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.interfaces.HistoryService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
+import ee.ivkhkdev.nptv23javafx.model.repository.HistoryRepository;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
@@ -16,12 +19,17 @@ import java.util.ResourceBundle;
 
 @Component
 public class SelectedBookFromModalityController implements Initializable {
+    private final BookService bookService;
     private HistoryService historyService;
     @FXML private VBox vbSelectedBookRoot;
+    @FXML private Button btTakeOnBook;
+    @FXML private Button btReturnBook;
     private Book book;
 
-    public SelectedBookFromModalityController(HistoryService historyService) {
+    public SelectedBookFromModalityController(HistoryService historyService, BookService bookService, HistoryRepository historyRepository) {
         this.historyService = historyService;
+        this.bookService = bookService;
+
     }
 
     public void setBook(Book book) {
@@ -31,7 +39,7 @@ public class SelectedBookFromModalityController implements Initializable {
     @FXML private void takeOnBook() {
         History history = new History();
         history.setBook(book);
-        history.setUser(Nptv23JavaFxApplication.currentUser);
+        history.setAppUser(Nptv23JavaFxApplication.currentUser);
         history.setTakeOnDate(LocalDate.now());
         try {
             historyService.add(history);
@@ -41,11 +49,21 @@ public class SelectedBookFromModalityController implements Initializable {
         Stage stage = (Stage) vbSelectedBookRoot.getScene().getWindow();
         stage.close();
     }
-    @FXML private void returnBook() {
 
+    @FXML private void returnBook() {
+        History historyWithBook = historyService.findByBookAndUser(book, Nptv23JavaFxApplication.currentUser);
+        historyWithBook.setReturnDate(LocalDate.now());
+        historyService.add(historyWithBook);
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        boolean isReading = historyService.reading(book);
+        if(isReading){
+            btTakeOnBook.setVisible(false);
+            btReturnBook.setVisible(true);
+        }else{
+            btTakeOnBook.setVisible(true);
+            btReturnBook.setVisible(false);
+        }
     }
 }
