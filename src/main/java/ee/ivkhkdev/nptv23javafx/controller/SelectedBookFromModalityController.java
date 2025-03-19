@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 
 @Component
 public class SelectedBookFromModalityController implements Initializable {
-    private HistoryService historyService;
+    private final HistoryService historyService;
     @FXML private VBox vbSelectedBookRoot;
     @FXML private Button btTakeOnBook;
     @FXML private Button btReturnBook;
@@ -41,11 +41,15 @@ public class SelectedBookFromModalityController implements Initializable {
         }catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Stage stage = (Stage) vbSelectedBookRoot.getScene().getWindow();
-        stage.close();
+        closeModalityWindows();
     }
     @FXML private void returnBook() {
-
+        historyService.returnBook(book);
+        closeModalityWindows();
+    }
+    private void closeModalityWindows(){
+        Stage stage = (Stage) vbSelectedBookRoot.getScene().getWindow();
+        stage.close();
     }
 
     public void setVizibleButtons(boolean readingBook) {

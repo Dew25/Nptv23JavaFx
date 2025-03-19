@@ -71,7 +71,7 @@ public class History {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, appUser, book, takeOnDate, returnDate);
+        return Objects.hash(id, appUser, book, takeOnDate);
     }
 
     @Override

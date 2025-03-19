@@ -54,11 +54,11 @@ public class MainFormController implements Initializable {
     private void openBookDetails(Book book) {
         boolean readingBook = historyService.isReadingBook(book);
         formLoader.loadSelectedBookFormModality(book,readingBook);
+        tvListBooks.refresh();
     }
     public void iniTableView(){
         tvListBooks.setItems(bookService.getObservableList());
     }
-
     public void setInfoMessage(String message){
         lbInfo.setText(message);
     }
@@ -106,6 +106,7 @@ public class MainFormController implements Initializable {
                 Book selectedBook = tvListBooks.getSelectionModel().getSelectedItem();
                 try {
                     openBookDetails(selectedBook);
+
                     lbInfo.setText(selectedBook.getTitle() + " - выдана пользователю "
                             + Nptv23JavaFxApplication.currentUser.getFirstname()
                             + " "

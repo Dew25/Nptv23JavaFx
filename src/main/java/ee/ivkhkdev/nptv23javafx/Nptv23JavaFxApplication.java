@@ -23,7 +23,6 @@ public class Nptv23JavaFxApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         Nptv23JavaFxApplication.primaryStage = primaryStage;
-
         FormLoader formLoader = applicationContext.getBean(FormLoader.class);
         formLoader.loadLoginForm();
     }

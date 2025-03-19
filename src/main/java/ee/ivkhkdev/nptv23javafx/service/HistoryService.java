@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,10 +51,26 @@ private final HistoryRepository historyRepository;
     }
 
     public boolean isReadingBook(Book book) {
-        List<History> HistoryWithReadingBook = historyRepository.findByBook_IdAndAppUser_Id(book.getId(), Nptv23JavaFxApplication.currentUser.getId());
-        if(HistoryWithReadingBook.isEmpty()){
-            return false;
+        List<History> listHistoryWithReadingBook = historyRepository.findByBook_IdAndAppUser_Id(book.getId(), Nptv23JavaFxApplication.currentUser.getId());
+        for(History history : listHistoryWithReadingBook){
+            if(history.getReturnDate() == null){
+                return true;
+            }
         }
-        return true;
+        return false;
+    }
+    @Transactional
+    @Override
+    public boolean returnBook(Book book) {
+        List<History> listHistory = historyRepository.findByBook_IdAndAppUser_Id(book.getId(),Nptv23JavaFxApplication.currentUser.getId());
+        for (History history : listHistory) {
+            if(history.getReturnDate() == null) {
+                history.setReturnDate(LocalDate.now());
+                history.getBook().setCount(history.getBook().getCount() + 1);
+                historyRepository.save(history);
+                return true;
+            }
+        }
+        return false;
     }
 }
