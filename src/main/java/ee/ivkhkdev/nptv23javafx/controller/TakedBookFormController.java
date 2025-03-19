@@ -30,7 +30,7 @@ public class TakedBookFormController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lvTackedBookRoot.setItems(historyService.getObservableTakedList());
+        lvTackedBookRoot.setItems(historyService.getObservableTakenList());
         lvTackedBookRoot.setCellFactory(lv -> new ListCell<>() {
             @Override
             protected void updateItem(History history, boolean empty) {

@@ -11,7 +11,7 @@ public class History {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
-    private AppUser user;
+    private AppUser appUser;
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Book book;
     @Temporal(TemporalType.DATE)
@@ -30,12 +30,12 @@ public class History {
         this.id = id;
     }
 
-    public AppUser getUser() {
-        return user;
+    public AppUser getAppUser() {
+        return appUser;
     }
 
-    public void setUser(AppUser user) {
-        this.user = user;
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 
     public Book getBook() {
@@ -66,19 +66,19 @@ public class History {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         History history = (History) o;
-        return Objects.equals(id, history.id) && Objects.equals(user, history.user) && Objects.equals(book, history.book) && Objects.equals(takeOnDate, history.takeOnDate) && Objects.equals(returnDate, history.returnDate);
+        return Objects.equals(id, history.id) && Objects.equals(appUser, history.appUser) && Objects.equals(book, history.book) && Objects.equals(takeOnDate, history.takeOnDate) && Objects.equals(returnDate, history.returnDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, book, takeOnDate, returnDate);
+        return Objects.hash(id, appUser, book, takeOnDate, returnDate);
     }
 
     @Override
     public String toString() {
         return "History{" +
                 "id=" + id +
-                ", user=" + user.getFirstname() + " " + user.getLastname() +
+                ", appUser=" + appUser.getFirstname() + " " + appUser.getLastname() +
                 ", book=" + book.getTitle() + " " + book.getCount() +
                 ", takeOnDate=" + takeOnDate +
                 ", returnDate=" + returnDate +

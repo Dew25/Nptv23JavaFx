@@ -132,13 +132,14 @@ public class FormLoader {
         getPrimaryStage().setTitle("Создание нового пользователя");
     }
 
-    public void loadSelectedBookFormModality(Book book) {
+    public void loadSelectedBookFormModality(Book book, boolean readingBook) {
         FXMLLoader fxmlLoader = springFXMLLoader.load("/view/book/selectedBookFormModality.fxml");
         Parent root;
         try {
             root = fxmlLoader.load();
             SelectedBookFromModalityController selectedBookFromController = fxmlLoader.getController();
             selectedBookFromController.setBook(book);
+            selectedBookFromController.setVizibleButtons(readingBook);
             // Создаем модальное окно
             Stage stage = new Stage();
             stage.setTitle("Информация о книге");

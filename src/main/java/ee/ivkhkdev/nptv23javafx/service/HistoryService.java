@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.service;
 
+import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
 import ee.ivkhkdev.nptv23javafx.model.repository.BookRepository;
@@ -8,9 +9,9 @@ import jakarta.transaction.Transactional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class HistoryService implements ee.ivkhkdev.nptv23javafx.interfaces.HistoryService {
 private final HistoryRepository historyRepository;
@@ -37,7 +38,7 @@ private final HistoryRepository historyRepository;
         return historyRepository.findAll();
     }
 
-    public ObservableList<History> getObservableTakedList() {
+    public ObservableList<History> getObservableTakenList() {
         ObservableList<History> observableList = FXCollections.observableArrayList();
         for (History history : getList()) {
             if(history.getReturnDate() == null){
@@ -45,5 +46,13 @@ private final HistoryRepository historyRepository;
             }
         }
         return observableList;
+    }
+
+    public boolean isReadingBook(Book book) {
+        List<History> HistoryWithReadingBook = historyRepository.findByBook_IdAndAppUser_Id(book.getId(), Nptv23JavaFxApplication.currentUser.getId());
+        if(HistoryWithReadingBook.isEmpty()){
+            return false;
+        }
+        return true;
     }
 }

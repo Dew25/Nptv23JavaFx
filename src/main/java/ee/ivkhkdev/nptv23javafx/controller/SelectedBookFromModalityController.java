@@ -6,6 +6,7 @@ import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,8 @@ import java.util.ResourceBundle;
 public class SelectedBookFromModalityController implements Initializable {
     private HistoryService historyService;
     @FXML private VBox vbSelectedBookRoot;
+    @FXML private Button btTakeOnBook;
+    @FXML private Button btReturnBook;
     private Book book;
 
     public SelectedBookFromModalityController(HistoryService historyService) {
@@ -31,7 +34,7 @@ public class SelectedBookFromModalityController implements Initializable {
     @FXML private void takeOnBook() {
         History history = new History();
         history.setBook(book);
-        history.setUser(Nptv23JavaFxApplication.currentUser);
+        history.setAppUser(Nptv23JavaFxApplication.currentUser);
         history.setTakeOnDate(LocalDate.now());
         try {
             historyService.add(history);
@@ -44,6 +47,17 @@ public class SelectedBookFromModalityController implements Initializable {
     @FXML private void returnBook() {
 
     }
+
+    public void setVizibleButtons(boolean readingBook) {
+        if (readingBook) {
+            btTakeOnBook.setVisible(false);
+            btReturnBook.setVisible(true);
+        }else{
+            btTakeOnBook.setVisible(true);
+            btReturnBook.setVisible(false);
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

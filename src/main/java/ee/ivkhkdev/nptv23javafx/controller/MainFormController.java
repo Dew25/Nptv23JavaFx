@@ -6,6 +6,7 @@ import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
 import ee.ivkhkdev.nptv23javafx.service.BookServiceImpl;
+import ee.ivkhkdev.nptv23javafx.service.HistoryService;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -28,6 +29,7 @@ public class MainFormController implements Initializable {
 
     private FormLoader formLoader;
     private BookService bookService;
+    private HistoryService historyService;
     @FXML private VBox vbMainFormRoot;
     @FXML private TableView<Book> tvListBooks;
     @FXML private TableColumn<Book, String> tcId;
@@ -40,16 +42,18 @@ public class MainFormController implements Initializable {
     @FXML private Label lbInfo;
 
 
-    public MainFormController(FormLoader formLoader, BookService bookService) {
+    public MainFormController(FormLoader formLoader, BookService bookService,HistoryService historyService) {
         this.formLoader = formLoader;
         this.bookService = bookService;
+        this.historyService = historyService;
     }
 
     @FXML private void showEditBookForm() {
         formLoader.loadEditBookForm(tvListBooks.getSelectionModel().getSelectedItem());
     }
     private void openBookDetails(Book book) {
-        formLoader.loadSelectedBookFormModality(book);
+        boolean readingBook = historyService.isReadingBook(book);
+        formLoader.loadSelectedBookFormModality(book,readingBook);
     }
     public void iniTableView(){
         tvListBooks.setItems(bookService.getObservableList());

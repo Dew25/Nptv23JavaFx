@@ -8,11 +8,12 @@ import ee.ivkhkdev.nptv23javafx.model.repository.BookRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class BookServiceImpl implements BookService {
 
     private final AuthorRepository authorRepository;
