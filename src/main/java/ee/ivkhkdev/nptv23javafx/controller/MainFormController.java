@@ -68,24 +68,15 @@ public class MainFormController implements Initializable {
         vbMainFormRoot.getChildren().addFirst(formLoader.loadMenuForm());
         // Инициируем список книг
         tvListBooks.setItems(bookService.getObservableList());
-        // Настраиваем отображение полей книги в столбцах таблицы
-        tcId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tcTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        // Авторы -> в строку преобразовыаем в виде Имя Фамилия
-        tcAuthors.setCellValueFactory(cellData -> {
-            Book book = cellData.getValue(); // Получаем объект Book из строки таблицы
-            if (book.getAuthors() == null || book.getAuthors().isEmpty()) {
-                return new SimpleStringProperty("");
-            }
-            // Преобразуем коллекцию авторов в строку
-            String authors = book.getAuthors().stream()
-                    .map(author -> author.getFirstname() + " " + author.getLastname())
-                    .collect(Collectors.joining(", "));
-            return new SimpleStringProperty(authors);
-        });
-        tcPublicationYear.setCellValueFactory(new PropertyValueFactory<>("publicationYear"));
-        tcQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        tcCount.setCellValueFactory(new PropertyValueFactory<>("count"));
+
+        // Настраиваем отображение полей книги в столбцах таблицы, для удобства создали StringProperty в Book
+        tcId.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+        tcTitle.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
+        tcAuthors.setCellValueFactory(cellData -> cellData.getValue().authorsProperty());
+        tcPublicationYear.setCellValueFactory(cellData -> cellData.getValue().publicationYearProperty());
+        tcQuantity.setCellValueFactory(cellData -> cellData.getValue().quantityProperty());
+        tcCount.setCellValueFactory(cellData -> cellData.getValue().countProperty());
+
         // Навешиваем на таблицу книг обработчик события клика мышкой
         // (логика: при клике проверяет роль и показывает или скрывает HBox с кнопкой Редактировать)
         tvListBooks.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Book>() {
@@ -106,7 +97,6 @@ public class MainFormController implements Initializable {
                 Book selectedBook = tvListBooks.getSelectionModel().getSelectedItem();
                 try {
                     openBookDetails(selectedBook);
-
                     lbInfo.setText(selectedBook.getTitle() + " - выдана пользователю "
                             + Nptv23JavaFxApplication.currentUser.getFirstname()
                             + " "

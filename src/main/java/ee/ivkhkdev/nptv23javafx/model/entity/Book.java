@@ -1,10 +1,17 @@
 package ee.ivkhkdev.nptv23javafx.model.entity;
 
 import jakarta.persistence.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import org.aopalliance.intercept.MethodInterceptor;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 public class Book {
@@ -97,4 +104,33 @@ public class Book {
                 ", count=" + count +
                 '}';
     }
+    @Transient
+    public StringProperty idProperty(){
+        return new SimpleStringProperty(String.valueOf(id));
+    }
+    @Transient
+    public StringProperty titleProperty() {
+        return new SimpleStringProperty(title);
+    }
+    @Transient
+    public StringProperty publicationYearProperty() {
+        return new SimpleStringProperty(String.valueOf(publicationYear));
+    }@Transient
+    public StringProperty quantityProperty() {
+        return new SimpleStringProperty(String.valueOf(quantity));
+    }
+    @Transient
+    public StringProperty countProperty() {
+        return new SimpleStringProperty(String.valueOf(count));
+    }
+    @Transient
+    public StringProperty authorsProperty() {
+        // Преобразуем коллекцию авторов в строку
+        String authors = getAuthors().stream()
+                .map(author -> author.getFirstname() + " " + author.getLastname())
+                .collect(Collectors.joining(", "));
+        return new SimpleStringProperty(authors);
+    }
+
+
 }
