@@ -15,12 +15,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
-public class TakedBookFormController implements Initializable {
+public class ListTakedBookFormController implements Initializable {
     private FormLoader formLoader;
     private HistoryService historyService;
     @FXML private ListView<History> lvTackedBookRoot;
 
-    public TakedBookFormController(FormLoader formLoader, HistoryService historyService) {
+    public ListTakedBookFormController(FormLoader formLoader, HistoryService historyService) {
         this.formLoader = formLoader;
         this.historyService = historyService;
     }

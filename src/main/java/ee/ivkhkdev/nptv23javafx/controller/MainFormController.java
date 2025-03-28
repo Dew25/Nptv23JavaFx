@@ -1,14 +1,10 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
-import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
-import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
-import ee.ivkhkdev.nptv23javafx.service.BookServiceImpl;
 import ee.ivkhkdev.nptv23javafx.service.HistoryService;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -16,13 +12,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 @Component
 public class MainFormController implements Initializable {
@@ -56,8 +50,15 @@ public class MainFormController implements Initializable {
         formLoader.loadSelectedBookFormModality(book,readingBook);
         tvListBooks.refresh();
     }
-    public void iniTableView(){
+    public void initTableView() {
+        this.initTableView("");
+    }
+    public void initTableView(String message) {
         tvListBooks.setItems(bookService.getObservableList());
+        hbEditBook.setVisible(false);
+        if(message != null && !message.equals("")) {
+            setInfoMessage(message);
+        }
     }
     public void setInfoMessage(String message){
         lbInfo.setText(message);

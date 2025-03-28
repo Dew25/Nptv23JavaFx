@@ -40,12 +40,18 @@ public class FormLoader {
         getPrimaryStage().show();
     }
     public void loadMainForm(){
+        this.loadMainForm("");
+    }
+    public void loadMainForm(String message){
         FXMLLoader fxmlLoader = springFXMLLoader.load("/view/main/mainForm.fxml");
         Parent root;
         try {
             root = fxmlLoader.load();
             MainFormController controller = fxmlLoader.getController();
-            controller.iniTableView();
+            controller.initTableView();
+            if(message!=null && message.length()>0){
+                controller.setInfoMessage(message);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -184,7 +190,7 @@ public class FormLoader {
     }
 
     public void loadTakedBookForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/book/takedBookForm.fxml");
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/book/listTakedBookForm.fxml");
         Parent root;
         try {
             root = fxmlLoader.load();
@@ -193,6 +199,19 @@ public class FormLoader {
             getPrimaryStage().setTitle("Список выданных книг");
         } catch (IOException e) {
                 throw new RuntimeException(e);
+        }
+    }
+
+    public void loadProfileForm() {
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/user/profileForm.fxml");
+        Parent root;
+        try {
+            root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            getPrimaryStage().setScene(scene);
+            getPrimaryStage().setTitle("Профиль пользователя");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

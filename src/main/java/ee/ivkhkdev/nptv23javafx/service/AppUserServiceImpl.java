@@ -12,10 +12,12 @@ import java.util.Optional;
 @Service
 public class AppUserServiceImpl implements AppUserService {
 
+    private final AppUserRepository appUserRepository;
     private AppUserRepository repository;
-    public AppUserServiceImpl(AppUserRepository repository) {
+    public AppUserServiceImpl(AppUserRepository repository, AppUserRepository appUserRepository) {
         this.repository = repository;
         initSuperUser();
+        this.appUserRepository = appUserRepository;
     }
     @Override
     public List<AppUser> getList() {
@@ -52,5 +54,10 @@ public class AppUserServiceImpl implements AppUserService {
         }
         Nptv23JavaFxApplication.currentUser = loginUser;
         return true;
+    }
+
+    @Override
+    public Optional<AppUser> findAppUser(AppUser appUser) {
+        return appUserRepository.findById(appUser.getId());
     }
 }

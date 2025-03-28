@@ -44,6 +44,9 @@ public class MenuFormController implements Initializable {
     @FXML private void showTakedBookForm(){
         formLoader.loadTakedBookForm();
     }
+    @FXML private void showProfileForm(){
+        formLoader.loadProfileForm();
+    }
     @FXML private void showListAuthorsForm(){
         formLoader.loadListAuthorForm();
     }

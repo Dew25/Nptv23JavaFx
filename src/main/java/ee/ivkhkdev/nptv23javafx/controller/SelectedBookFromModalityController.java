@@ -18,13 +18,15 @@ import java.util.ResourceBundle;
 @Component
 public class SelectedBookFromModalityController implements Initializable {
     private final HistoryService historyService;
+    private final MainFormController mainFormController;
     @FXML private VBox vbSelectedBookRoot;
     @FXML private Button btTakeOnBook;
     @FXML private Button btReturnBook;
     private Book book;
 
-    public SelectedBookFromModalityController(HistoryService historyService) {
+    public SelectedBookFromModalityController(HistoryService historyService, MainFormController mainFormController) {
         this.historyService = historyService;
+        this.mainFormController = mainFormController;
     }
 
     public void setBook(Book book) {
@@ -45,6 +47,7 @@ public class SelectedBookFromModalityController implements Initializable {
     }
     @FXML private void returnBook() {
         historyService.returnBook(book);
+        mainFormController.initTableView("Книга возварщена");
         closeModalityWindows();
     }
     private void closeModalityWindows(){
