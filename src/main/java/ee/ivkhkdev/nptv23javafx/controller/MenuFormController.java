@@ -1,7 +1,10 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
-import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
+import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
+import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
+import ee.ivkhkdev.nptv23javafx.model.entity.Session;
+import ee.ivkhkdev.nptv23javafx.model.repository.SessionRepository;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,12 +13,16 @@ import javafx.scene.control.MenuItem;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
 public class MenuFormController implements Initializable {
 
+    private final AppUserService appUserService;
+    private final SessionRepository sessionRepository;
     private FormLoader formLoader;
+    private Session session;
     @FXML private Menu mBooks;
     @FXML private Menu mAdmin;
     @FXML private Menu mUsers;
@@ -24,8 +31,10 @@ public class MenuFormController implements Initializable {
     @FXML private MenuItem miLogout;
 
 
-    public MenuFormController(FormLoader formLoader) {
+    public MenuFormController(FormLoader formLoader, AppUserService appUserService, SessionRepository sessionRepository) {
         this.formLoader = formLoader;
+        this.appUserService = appUserService;
+        this.sessionRepository = sessionRepository;
     }
 
     @FXML private void showAuthorForm(){
@@ -38,40 +47,50 @@ public class MenuFormController implements Initializable {
         formLoader.loadLoginForm();
     }
     @FXML private void logout(){
-        Nptv23JavaFxApplication.currentUser = null;
+        session = new Session(1L);
+        sessionRepository.save(session);
         formLoader.loadLoginForm();
     }
     @FXML private void showTakedBookForm(){
         formLoader.loadTakedBookForm();
     }
+
     @FXML private void showListAuthorsForm(){
         formLoader.loadListAuthorForm();
     }
+
     private void initMenuVisible(){
-        if(Nptv23JavaFxApplication.currentUser.getRoles().contains(Nptv23JavaFxApplication.ROLES.ADMINISTRATOR.toString())){
+        Optional<Session> optionSession = appUserService.getSession();
+        this.session = optionSession.get();
+        AppUser currentUser = optionSession.get().getCurrentUser();
+
+        if(session.getCurrentUser().getRoles().contains("ADMINISTRATOR")){
             mBooks.setVisible(true);
             mAdmin.setVisible(true);
             mUsers.setVisible(true);
             miEnter.setVisible(false);
             miProfile.setVisible(true);
             miLogout.setVisible(true);
-        }else if(Nptv23JavaFxApplication.currentUser.getRoles().contains(Nptv23JavaFxApplication.ROLES.MANAGER.toString())){
+        }else if(session.getCurrentUser().getRoles().contains("MANAGER")){
             mBooks.setVisible(true);
             mAdmin.setVisible(false);
             mUsers.setVisible(true);
             miEnter.setVisible(false);
             miProfile.setVisible(true);
             miLogout.setVisible(true);
-        }else if(Nptv23JavaFxApplication.currentUser.getRoles().contains(Nptv23JavaFxApplication.ROLES.USER.toString())){
+        }else if(session.getCurrentUser().getRoles().contains("USER")){
             mBooks.setVisible(false);
             mAdmin.setVisible(false);
             mUsers.setVisible(true);
             miEnter.setVisible(false);
             miProfile.setVisible(true);
             miLogout.setVisible(true);
-
         }
+    }
 
+    public void setSession() {
+        Optional<Session> optionalSession = appUserService.getSession();
+        optionalSession.ifPresent(value -> this.session = value);
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

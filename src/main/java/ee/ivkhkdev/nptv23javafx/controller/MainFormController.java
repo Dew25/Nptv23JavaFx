@@ -4,11 +4,9 @@ import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
-import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
-import ee.ivkhkdev.nptv23javafx.service.BookServiceImpl;
+import ee.ivkhkdev.nptv23javafx.model.entity.Session;
 import ee.ivkhkdev.nptv23javafx.service.HistoryService;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -16,7 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.springframework.stereotype.Component;
@@ -29,6 +26,7 @@ public class MainFormController implements Initializable {
 
     private FormLoader formLoader;
     private BookService bookService;
+    private AppUserService appUserService;
     private HistoryService historyService;
     @FXML private VBox vbMainFormRoot;
     @FXML private TableView<Book> tvListBooks;
@@ -41,9 +39,9 @@ public class MainFormController implements Initializable {
     @FXML private HBox hbEditBook;
     @FXML private Label lbInfo;
 
-
-    public MainFormController(FormLoader formLoader, BookService bookService,HistoryService historyService) {
+    public MainFormController(FormLoader formLoader, AppUserService appUserService, BookService bookService,HistoryService historyService) {
         this.formLoader = formLoader;
+        this.appUserService = appUserService;
         this.bookService = bookService;
         this.historyService = historyService;
     }
@@ -83,7 +81,7 @@ public class MainFormController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
                 if (newValue != null) {
-                    if(Nptv23JavaFxApplication.currentUser.getRoles().contains(Nptv23JavaFxApplication.ROLES.MANAGER.toString())){
+                    if(Nptv23JavaFxApplication.currentUser.getRoles().contains("MANAGER")){
                         hbEditBook.setVisible(true);
                     }else{
                         hbEditBook.setVisible(false);
@@ -98,9 +96,9 @@ public class MainFormController implements Initializable {
                 try {
                     openBookDetails(selectedBook);
                     lbInfo.setText(selectedBook.getTitle() + " - выдана пользователю "
-                            + Nptv23JavaFxApplication.currentUser.getFirstname()
+                            + appUserService.getSession().get().getCurrentUser().getFirstname()
                             + " "
-                            + Nptv23JavaFxApplication.currentUser.getLastname());
+                            + appUserService.getSession().get().getCurrentUser().getLastname());
                 }catch (Exception e){
                     lbInfo.setText(selectedBook.getTitle() + " - выдать не удалось");
                 }

@@ -6,14 +6,15 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.ApplicationContext;
+
 
 @SpringBootApplication
 public class Nptv23JavaFxApplication extends Application {
-    public static ConfigurableApplicationContext applicationContext;
+    public static ApplicationContext applicationContext;
     public static Stage primaryStage;
     public static AppUser currentUser;
-    public enum ROLES {USER, MANAGER, ADMINISTRATOR}
+
 
     public static void main(String[] args) {
         applicationContext = SpringApplication.run(Nptv23JavaFxApplication.class, args);
