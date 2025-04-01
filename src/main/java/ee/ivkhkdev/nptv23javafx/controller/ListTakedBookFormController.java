@@ -38,7 +38,13 @@ public class ListTakedBookFormController implements Initializable {
                 if (empty || history == null) {
                     setText(null);
                 } else {
-                    setText(history.getId().toString() + ". " + history.getBook().getTitle() + " " + ((Integer)history.getBook().getCount()).toString());
+                    setText(
+                            history.getId().toString()
+                            + ". " + history.getBook().getTitle()
+                            + " " + ((Integer)history.getBook().getCount()).toString()
+                            + ". Выдана: "+history.getTakeOnDate().toString()
+                            + ". Возвращена: "+history.getReturnDate()
+                    );
                 }
             }
         });

@@ -1,8 +1,9 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
-import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
+import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
+import ee.ivkhkdev.nptv23javafx.model.entity.Session;
 import ee.ivkhkdev.nptv23javafx.service.HistoryService;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.beans.value.ChangeListener;
@@ -21,9 +22,11 @@ import java.util.ResourceBundle;
 @Component
 public class MainFormController implements Initializable {
 
-    private FormLoader formLoader;
-    private BookService bookService;
-    private HistoryService historyService;
+    private final FormLoader formLoader;
+    private final BookService bookService;
+    private final AppUserService appUserService;
+    private final HistoryService historyService;
+    private Session session;
     @FXML private VBox vbMainFormRoot;
     @FXML private TableView<Book> tvListBooks;
     @FXML private TableColumn<Book, String> tcId;
@@ -35,9 +38,9 @@ public class MainFormController implements Initializable {
     @FXML private HBox hbEditBook;
     @FXML private Label lbInfo;
 
-
-    public MainFormController(FormLoader formLoader, BookService bookService,HistoryService historyService) {
+    public MainFormController(FormLoader formLoader, AppUserService appUserService, BookService bookService,HistoryService historyService) {
         this.formLoader = formLoader;
+        this.appUserService = appUserService;
         this.bookService = bookService;
         this.historyService = historyService;
     }
@@ -50,15 +53,8 @@ public class MainFormController implements Initializable {
         formLoader.loadSelectedBookFormModality(book,readingBook);
         tvListBooks.refresh();
     }
-    public void initTableView() {
-        this.initTableView("");
-    }
-    public void initTableView(String message) {
+    public void initTableView(){
         tvListBooks.setItems(bookService.getObservableList());
-        hbEditBook.setVisible(false);
-        if(message != null && !message.equals("")) {
-            setInfoMessage(message);
-        }
     }
     public void setInfoMessage(String message){
         lbInfo.setText(message);
@@ -67,6 +63,8 @@ public class MainFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Добавляем форму меню первым элементом vbMainFormRoot
         vbMainFormRoot.getChildren().addFirst(formLoader.loadMenuForm());
+        this.session = appUserService.getSession().get();
+
         // Инициируем список книг
         tvListBooks.setItems(bookService.getObservableList());
 
@@ -84,7 +82,7 @@ public class MainFormController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
                 if (newValue != null) {
-                    if(Nptv23JavaFxApplication.currentUser.getRoles().contains(Nptv23JavaFxApplication.ROLES.MANAGER.toString())){
+                    if(session.getCurrentUser().getRoles().contains("MANAGER")){
                         hbEditBook.setVisible(true);
                     }else{
                         hbEditBook.setVisible(false);
@@ -99,9 +97,9 @@ public class MainFormController implements Initializable {
                 try {
                     openBookDetails(selectedBook);
                     lbInfo.setText(selectedBook.getTitle() + " - выдана пользователю "
-                            + Nptv23JavaFxApplication.currentUser.getFirstname()
+                            + session.getCurrentUser().getFirstname()
                             + " "
-                            + Nptv23JavaFxApplication.currentUser.getLastname());
+                            + session.getCurrentUser().getLastname());
                 }catch (Exception e){
                     lbInfo.setText(selectedBook.getTitle() + " - выдать не удалось");
                 }

@@ -3,6 +3,7 @@ package ee.ivkhkdev.nptv23javafx.controller;
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
+import ee.ivkhkdev.nptv23javafx.model.entity.Session;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,7 +37,7 @@ public class RegistrationFormController implements Initializable {
             newUser.setLastname(tfLastname.getText());
             newUser.setUsername(tfUsername.getText());
             newUser.setPassword(pfPassword.getText());
-            newUser.getRoles().add(Nptv23JavaFxApplication.ROLES.USER.toString());
+            newUser.getRoles().add("USER");
             appUserService.add(newUser);
             formLoader.loadLoginForm();
         }catch (Exception e){

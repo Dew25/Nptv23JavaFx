@@ -9,8 +9,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -19,11 +21,29 @@ import java.io.IOException;
 public class FormLoader {
     private final SpringFXMLLoader springFXMLLoader;
 
-
     public FormLoader(SpringFXMLLoader springFXMLLoader) {
         this.springFXMLLoader = springFXMLLoader;
-
     }
+
+    private Stage getPrimaryStage(){
+        return Nptv23JavaFxApplication.primaryStage;
+    }
+
+    private static void handle(WindowEvent event) {
+        // Можно показать диалог подтверждения перед закрытием
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Подтверждение");
+        alert.setHeaderText("Вы уверены, что хотите закрыть приложение?");
+        alert.setContentText("Нажмите ОК для закрытия или Отмена для продолжения.");
+
+        // Если пользователь нажимает "ОК", закрываем окно
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            Platform.exit(); // Закрываем приложение
+        } else {
+            event.consume(); // Отменяем событие закрытия (не закрываем окно)
+        }
+    }
+
     public void loadLoginForm(){
         FXMLLoader fxmlLoader = springFXMLLoader.load("/view/user/loginForm.fxml");
         Parent root;
@@ -40,42 +60,19 @@ public class FormLoader {
         getPrimaryStage().show();
     }
     public void loadMainForm(){
-        this.loadMainForm("");
-    }
-    public void loadMainForm(String message){
         FXMLLoader fxmlLoader = springFXMLLoader.load("/view/main/mainForm.fxml");
         Parent root;
         try {
             root = fxmlLoader.load();
             MainFormController controller = fxmlLoader.getController();
             controller.initTableView();
-            if(message!=null && message.length()>0){
-                controller.setInfoMessage(message);
-            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        getPrimaryStage().setOnCloseRequest(event -> {
-            // Можно показать диалог подтверждения перед закрытием
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Подтверждение");
-            alert.setHeaderText("Вы уверены, что хотите закрыть приложение?");
-            alert.setContentText("Нажмите ОК для закрытия или Отмена для продолжения.");
-
-            // Если пользователь нажимает "ОК", закрываем окно
-            if (alert.showAndWait().get() == javafx.scene.control.ButtonType.OK) {
-                Platform.exit(); // Закрываем приложение
-            } else {
-                event.consume(); // Отменяем событие закрытия (не закрываем окно)
-            }
-        });
+        getPrimaryStage().setOnCloseRequest(FormLoader::handle);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Nptv23JavaFX Библиотека");
-
-    }
-    private Stage getPrimaryStage(){
-        return Nptv23JavaFxApplication.primaryStage;
     }
     public void loadNewBookForm(){
         FXMLLoader fxmlLoader = springFXMLLoader.load("/view/book/newBookForm.fxml");
@@ -98,8 +95,6 @@ public class FormLoader {
             Scene scene = new Scene(editBookFormRoot);
             getPrimaryStage().setTitle("Nptv23JavaFX Библиотека - Редактирование книги");
             getPrimaryStage().setScene(scene);
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -107,7 +102,10 @@ public class FormLoader {
     public Parent loadMenuForm(){
         FXMLLoader fxmlLoader = springFXMLLoader.load("/view/menu/menuForm.fxml");
         try {
-            return fxmlLoader.load();
+            Parent root = fxmlLoader.load();
+            MenuFormController menuFormController = fxmlLoader.getController();
+            menuFormController.setSession();
+            return root;
         }catch (IOException e){
             throw new RuntimeException(e);
         }
@@ -161,7 +159,6 @@ public class FormLoader {
         Parent root;
         try {
             root = fxmlLoader.load();
-            ListAuthorsFormController listAuthorsFormController = fxmlLoader.getController();
             Scene scene = new Scene(root);
             getPrimaryStage().setScene(scene);
             getPrimaryStage().setTitle("Список авторов");
@@ -190,7 +187,7 @@ public class FormLoader {
     }
 
     public void loadTakedBookForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/book/listTakedBookForm.fxml");
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/book/takedBookForm.fxml");
         Parent root;
         try {
             root = fxmlLoader.load();
@@ -199,19 +196,6 @@ public class FormLoader {
             getPrimaryStage().setTitle("Список выданных книг");
         } catch (IOException e) {
                 throw new RuntimeException(e);
-        }
-    }
-
-    public void loadProfileForm() {
-        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/user/profileForm.fxml");
-        Parent root;
-        try {
-            root = fxmlLoader.load();
-            Scene scene = new Scene(root);
-            getPrimaryStage().setScene(scene);
-            getPrimaryStage().setTitle("Профиль пользователя");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

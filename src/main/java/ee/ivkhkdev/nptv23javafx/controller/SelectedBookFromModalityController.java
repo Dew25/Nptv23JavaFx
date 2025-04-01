@@ -1,9 +1,10 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
-import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
+import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.interfaces.HistoryService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
+import ee.ivkhkdev.nptv23javafx.model.entity.Session;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,19 +14,22 @@ import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component
 public class SelectedBookFromModalityController implements Initializable {
     private final HistoryService historyService;
+    private final AppUserService appUserService;
     private final MainFormController mainFormController;
     @FXML private VBox vbSelectedBookRoot;
     @FXML private Button btTakeOnBook;
     @FXML private Button btReturnBook;
     private Book book;
 
-    public SelectedBookFromModalityController(HistoryService historyService, MainFormController mainFormController) {
+    public SelectedBookFromModalityController(HistoryService historyService, AppUserService appUserService, MainFormController mainFormController) {
         this.historyService = historyService;
+        this.appUserService = appUserService;
         this.mainFormController = mainFormController;
     }
 
@@ -34,20 +38,30 @@ public class SelectedBookFromModalityController implements Initializable {
     }
 
     @FXML private void takeOnBook() {
-        History history = new History();
-        history.setBook(book);
-        history.setAppUser(Nptv23JavaFxApplication.currentUser);
-        history.setTakeOnDate(LocalDate.now());
-        try {
-            historyService.add(history);
-        }catch (Exception e) {
-            throw new RuntimeException(e);
+        Optional<Session> sessionOptional = appUserService.getSession();
+        if(sessionOptional.isPresent()) {
+            Session session = sessionOptional.get();
+            if(!session.isExpired()){
+                if(book.getCount() < 1){
+
+                }
+                History history = new History();
+                history.setBook(book);
+                history.setAppUser(session.getCurrentUser());
+                history.setTakeOnDate(LocalDate.now());
+                try {
+                    historyService.add(history);
+                }catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
+
         closeModalityWindows();
     }
     @FXML private void returnBook() {
         historyService.returnBook(book);
-        mainFormController.initTableView("Книга возварщена");
+        mainFormController.initTableView();
         closeModalityWindows();
     }
     private void closeModalityWindows(){
