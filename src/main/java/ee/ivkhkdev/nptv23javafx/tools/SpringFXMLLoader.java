@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpringFXMLLoader {
 
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
     public SpringFXMLLoader(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;

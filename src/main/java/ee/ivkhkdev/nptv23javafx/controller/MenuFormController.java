@@ -90,7 +90,13 @@ public class MenuFormController implements Initializable {
 
     public void setSession() {
         Optional<Session> optionalSession = appUserService.getSession();
-        optionalSession.ifPresent(value -> this.session = value);
+        if(optionalSession.isPresent()){
+            if(optionalSession.get().isExpired()){
+                logout();
+            }else{
+                this.session = optionalSession.get();
+            }
+        }
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

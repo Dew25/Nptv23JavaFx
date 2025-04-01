@@ -11,20 +11,19 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class Nptv23JavaFxApplication extends Application {
-    public static ApplicationContext applicationContext;
+    private static ApplicationContext applicationContext;
     public static Stage primaryStage;
-    public static AppUser currentUser;
+    //public static AppUser currentUser;
 
 
     public static void main(String[] args) {
-        applicationContext = SpringApplication.run(Nptv23JavaFxApplication.class, args);
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) {
         Nptv23JavaFxApplication.primaryStage = primaryStage;
-        FormLoader formLoader = applicationContext.getBean(FormLoader.class);
+        FormLoader formLoader = SpringApplication.run(Nptv23JavaFxApplication.class).getBean(FormLoader.class);
         formLoader.loadLoginForm();
     }
 }

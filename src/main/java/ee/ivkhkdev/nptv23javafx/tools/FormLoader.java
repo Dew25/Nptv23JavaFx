@@ -25,6 +25,10 @@ public class FormLoader {
         this.springFXMLLoader = springFXMLLoader;
     }
 
+    private Stage getPrimaryStage(){
+        return Nptv23JavaFxApplication.primaryStage;
+    }
+
     private static void handle(WindowEvent event) {
         // Можно показать диалог подтверждения перед закрытием
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -61,7 +65,7 @@ public class FormLoader {
         try {
             root = fxmlLoader.load();
             MainFormController controller = fxmlLoader.getController();
-            controller.iniTableView();
+            controller.initTableView();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -69,9 +73,6 @@ public class FormLoader {
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Nptv23JavaFX Библиотека");
-    }
-    private Stage getPrimaryStage(){
-        return Nptv23JavaFxApplication.primaryStage;
     }
     public void loadNewBookForm(){
         FXMLLoader fxmlLoader = springFXMLLoader.load("/view/book/newBookForm.fxml");
