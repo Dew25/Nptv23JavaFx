@@ -33,17 +33,15 @@ public class ProfileFormController implements Initializable {
         this.mainFormController = mainFormController;
     }
     @FXML private void updateProfile() {
-        Optional<AppUser> optionalAppUser = appUserService.findAppUser(Nptv23JavaFxApplication.currentUser);
-        if(optionalAppUser.isPresent()) {
-            AppUser appUser = optionalAppUser.get();
-            appUser.setFirstname(tfFirstname.getText());
-            appUser.setLastname(tfLastname.getText());
-            appUser.setUsername(tfUsername.getText());
-            if(!pfPassword.getText().isEmpty()){
-                appUser.setPassword(pfPassword.getText());
-            }
-            appUserService.add(appUser);
-            Nptv23JavaFxApplication.currentUser=appUser;
+        AppUser  appUser = appUserService.getSession().get().getCurrentUser();
+        appUser.setFirstname(tfFirstname.getText());
+        appUser.setLastname(tfLastname.getText());
+        appUser.setUsername(tfUsername.getText());
+        if(!pfPassword.getText().isEmpty()){
+           appUser.setPassword(pfPassword.getText());
+        }
+        appUserService.add(appUser);
+        if(appUserService.authentication(appUser.getUsername(), appUser.getPassword())){
             formLoader.loadMainForm("Профиль пользователя обновлен");
         }
 
@@ -54,7 +52,7 @@ public class ProfileFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        AppUser appUser = Nptv23JavaFxApplication.currentUser;
+        AppUser appUser = appUserService.getSession().get().getCurrentUser();
         if (appUser != null && appUser.getUsername() != "admin") {
             tfFirstname.setText(appUser.getFirstname());
             tfLastname.setText(appUser.getLastname());

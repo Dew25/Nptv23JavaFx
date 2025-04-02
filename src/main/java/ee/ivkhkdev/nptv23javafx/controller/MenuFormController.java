@@ -58,6 +58,9 @@ public class MenuFormController implements Initializable {
     @FXML private void showListAuthorsForm(){
         formLoader.loadListAuthorForm();
     }
+    @FXML private void showProfileForm(){
+        formLoader.loadProfileForm();
+    }
 
     private void initMenuVisible(){
         Optional<Session> optionSession = appUserService.getSession();
