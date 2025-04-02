@@ -1,6 +1,5 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
-import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.model.entity.Session;
@@ -21,7 +20,7 @@ public class MenuFormController implements Initializable {
 
     private final AppUserService appUserService;
     private final SessionRepository sessionRepository;
-    private FormLoader formLoader;
+    private final FormLoader formLoader;
     private Session session;
     @FXML private Menu mBooks;
     @FXML private Menu mAdmin;
@@ -64,31 +63,32 @@ public class MenuFormController implements Initializable {
 
     private void initMenuVisible(){
         Optional<Session> optionSession = appUserService.getSession();
-        this.session = optionSession.get();
-        AppUser currentUser = optionSession.get().getCurrentUser();
-
-        if(session.getCurrentUser().getRoles().contains("ADMINISTRATOR")){
-            mBooks.setVisible(true);
-            mAdmin.setVisible(true);
-            mUsers.setVisible(true);
-            miEnter.setVisible(false);
-            miProfile.setVisible(true);
-            miLogout.setVisible(true);
-        }else if(session.getCurrentUser().getRoles().contains("MANAGER")){
-            mBooks.setVisible(true);
-            mAdmin.setVisible(false);
-            mUsers.setVisible(true);
-            miEnter.setVisible(false);
-            miProfile.setVisible(true);
-            miLogout.setVisible(true);
-        }else if(session.getCurrentUser().getRoles().contains("USER")){
-            mBooks.setVisible(false);
-            mAdmin.setVisible(false);
-            mUsers.setVisible(true);
-            miEnter.setVisible(false);
-            miProfile.setVisible(true);
-            miLogout.setVisible(true);
+        if(optionSession.isPresent()){
+            this.session = optionSession.get();
+            if(session.getCurrentUser().getRoles().contains("ADMINISTRATOR")){
+                mBooks.setVisible(true);
+                mAdmin.setVisible(true);
+                mUsers.setVisible(true);
+                miEnter.setVisible(false);
+                miProfile.setVisible(true);
+                miLogout.setVisible(true);
+            }else if(session.getCurrentUser().getRoles().contains("MANAGER")){
+                mBooks.setVisible(true);
+                mAdmin.setVisible(false);
+                mUsers.setVisible(true);
+                miEnter.setVisible(false);
+                miProfile.setVisible(true);
+                miLogout.setVisible(true);
+            }else if(session.getCurrentUser().getRoles().contains("USER")){
+                mBooks.setVisible(false);
+                mAdmin.setVisible(false);
+                mUsers.setVisible(true);
+                miEnter.setVisible(false);
+                miProfile.setVisible(true);
+                miLogout.setVisible(true);
+            }
         }
+
     }
 
     public void setSession() {

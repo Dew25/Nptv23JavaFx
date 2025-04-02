@@ -1,6 +1,5 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
-import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
@@ -11,7 +10,7 @@ import javafx.scene.control.TextField;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.util.Optional;
+
 import java.util.ResourceBundle;
 
 @Component
@@ -19,7 +18,7 @@ public class ProfileFormController implements Initializable {
 
     private final AppUserService appUserService;
     private final FormLoader formLoader;
-    private final MainFormController mainFormController;
+
 
     @FXML
     private TextField tfLastname;
@@ -27,10 +26,10 @@ public class ProfileFormController implements Initializable {
     @FXML private PasswordField pfPassword;
     @FXML private TextField tfFirstname;
 
-    public ProfileFormController(AppUserService appUserService, FormLoader formLoader, MainFormController mainFormController) {
+    public ProfileFormController(AppUserService appUserService, FormLoader formLoader) {
         this.appUserService = appUserService;
         this.formLoader = formLoader;
-        this.mainFormController = mainFormController;
+
     }
     @FXML private void updateProfile() {
         AppUser  appUser = appUserService.getSession().get().getCurrentUser();

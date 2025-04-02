@@ -29,7 +29,7 @@ public class FormLoader {
         return Nptv23JavaFxApplication.primaryStage;
     }
 
-    private static void handle(WindowEvent event) {
+    private void handle(WindowEvent event) {
         // Можно показать диалог подтверждения перед закрытием
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Подтверждение");
@@ -68,14 +68,14 @@ public class FormLoader {
         try {
             root = fxmlLoader.load();
             MainFormController mainFormController = fxmlLoader.getController();
-            if(message!=null && !message.equals("")){
+            if(message!=null && !message.isEmpty()){
                 mainFormController.setInfoMessage(message);
             }
             mainFormController.initTableView();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        getPrimaryStage().setOnCloseRequest(FormLoader::handle);
+        getPrimaryStage().setOnCloseRequest(this::handle);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Nptv23JavaFX Библиотека");
