@@ -111,7 +111,6 @@ public class FormLoader {
         try {
             Parent root = fxmlLoader.load();
             MenuFormController menuFormController = fxmlLoader.getController();
-            menuFormController.setSession();
             return root;
         }catch (IOException e){
             throw new RuntimeException(e);

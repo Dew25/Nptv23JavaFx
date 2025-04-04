@@ -1,10 +1,13 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
+import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.interfaces.HistoryService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
 import ee.ivkhkdev.nptv23javafx.model.entity.Session;
+import ee.ivkhkdev.nptv23javafx.security.Role;
+import ee.ivkhkdev.nptv23javafx.security.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -19,6 +22,8 @@ import java.util.ResourceBundle;
 
 @Component
 public class SelectedBookFromModalityController implements Initializable {
+    private Role role;
+    private SessionManager sessionManager;
     private final HistoryService historyService;
     private final AppUserService appUserService;
     private final MainFormController mainFormController;
@@ -27,7 +32,9 @@ public class SelectedBookFromModalityController implements Initializable {
     @FXML private Button btReturnBook;
     private Book book;
 
-    public SelectedBookFromModalityController(HistoryService historyService, AppUserService appUserService, MainFormController mainFormController) {
+    public SelectedBookFromModalityController(Role role, SessionManager sessionManager, HistoryService historyService, AppUserService appUserService, MainFormController mainFormController) {
+        this.role = role;
+        this.sessionManager = sessionManager;
         this.historyService = historyService;
         this.appUserService = appUserService;
         this.mainFormController = mainFormController;
@@ -37,27 +44,19 @@ public class SelectedBookFromModalityController implements Initializable {
         this.book = book;
     }
 
-    @FXML private void takeOnBook() {
-        Optional<Session> sessionOptional = appUserService.getSession();
-        if(sessionOptional.isPresent()) {
-            Session session = sessionOptional.get();
-            if(!session.isExpired()){
-                if(book.getCount() < 1){
-
-                }
-                History history = new History();
-                history.setBook(book);
-                history.setAppUser(session.getCurrentUser());
-                history.setTakeOnDate(LocalDate.now());
-                try {
-                    historyService.add(history);
-                }catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
+    @FXML
+    private void takeOnBook() {
+        try {
+            History history = new History();
+            history.setBook(book);
+            history.setAppUser(sessionManager.getCurrentUser());
+            history.setTakeOnDate(LocalDate.now());
+            historyService.add(history);
+            closeModalityWindows();
+        }catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        closeModalityWindows();
     }
     @FXML private void returnBook() {
         historyService.returnBook(book);

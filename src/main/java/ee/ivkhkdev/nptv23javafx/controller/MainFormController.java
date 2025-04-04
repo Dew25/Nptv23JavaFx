@@ -63,7 +63,7 @@ public class MainFormController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Добавляем форму меню первым элементом vbMainFormRoot
         vbMainFormRoot.getChildren().addFirst(formLoader.loadMenuForm());
-        this.session = appUserService.getSession().get();
+
 
         // Инициируем список книг
         tvListBooks.setItems(bookService.getObservableList());

@@ -11,10 +11,7 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class Nptv23JavaFxApplication extends Application {
-    private static ApplicationContext applicationContext;
     public static Stage primaryStage;
-    //public static AppUser currentUser;
-
 
     public static void main(String[] args) {
         launch(args);

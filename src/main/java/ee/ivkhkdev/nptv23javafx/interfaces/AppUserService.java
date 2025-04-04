@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface AppUserService extends AppService<AppUser> {
     void initSuperUser();
-    boolean authentication(String username, String password);
-    Optional<Session> getSession();
 }

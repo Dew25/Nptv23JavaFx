@@ -1,9 +1,10 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
-import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.model.entity.Session;
-import ee.ivkhkdev.nptv23javafx.model.repository.SessionRepository;
+import ee.ivkhkdev.nptv23javafx.model.repository.BookRepository;
+import ee.ivkhkdev.nptv23javafx.security.Role;
+import ee.ivkhkdev.nptv23javafx.security.SessionManager;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +20,8 @@ import java.util.ResourceBundle;
 public class MenuFormController implements Initializable {
 
     private final AppUserService appUserService;
-    private final SessionRepository sessionRepository;
+    private SessionManager sessionManager;
+
     private final FormLoader formLoader;
     private Session session;
     @FXML private Menu mBooks;
@@ -30,10 +32,12 @@ public class MenuFormController implements Initializable {
     @FXML private MenuItem miLogout;
 
 
-    public MenuFormController(FormLoader formLoader, AppUserService appUserService, SessionRepository sessionRepository) {
+    public MenuFormController( SessionManager sessionManager, FormLoader formLoader, AppUserService appUserService) {
+
+        this.sessionManager = sessionManager;
         this.formLoader = formLoader;
         this.appUserService = appUserService;
-        this.sessionRepository = sessionRepository;
+
     }
 
     @FXML private void showAuthorForm(){
@@ -46,8 +50,7 @@ public class MenuFormController implements Initializable {
         formLoader.loadLoginForm();
     }
     @FXML private void logout(){
-        session = new Session(1L);
-        sessionRepository.save(session);
+        this.sessionManager.logout();
         formLoader.loadLoginForm();
     }
     @FXML private void showTakedBookForm(){
@@ -62,24 +65,22 @@ public class MenuFormController implements Initializable {
     }
 
     private void initMenuVisible(){
-        Optional<Session> optionSession = appUserService.getSession();
-        if(optionSession.isPresent()){
-            this.session = optionSession.get();
-            if(session.getCurrentUser().getRoles().contains("ADMINISTRATOR")){
+        if(sessionManager.isLoggedIn()){
+            if(sessionManager.getCurrentUser().getRoles().contains(Role.ADMINISTRATOR.toString())){
                 mBooks.setVisible(true);
                 mAdmin.setVisible(true);
                 mUsers.setVisible(true);
                 miEnter.setVisible(false);
                 miProfile.setVisible(true);
                 miLogout.setVisible(true);
-            }else if(session.getCurrentUser().getRoles().contains("MANAGER")){
+            }else if(sessionManager.getCurrentUser().getRoles().contains(Role.MANAGER.toString())){
                 mBooks.setVisible(true);
                 mAdmin.setVisible(false);
                 mUsers.setVisible(true);
                 miEnter.setVisible(false);
                 miProfile.setVisible(true);
                 miLogout.setVisible(true);
-            }else if(session.getCurrentUser().getRoles().contains("USER")){
+            }else if(session.getCurrentUser().getRoles().contains(Role.USER.toString())){
                 mBooks.setVisible(false);
                 mAdmin.setVisible(false);
                 mUsers.setVisible(true);
@@ -91,16 +92,6 @@ public class MenuFormController implements Initializable {
 
     }
 
-    public void setSession() {
-        Optional<Session> optionalSession = appUserService.getSession();
-        if(optionalSession.isPresent()){
-            if(optionalSession.get().isExpired()){
-                logout();
-            }else{
-                this.session = optionalSession.get();
-            }
-        }
-    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initMenuVisible();

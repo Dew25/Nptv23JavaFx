@@ -2,6 +2,7 @@ package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
+import ee.ivkhkdev.nptv23javafx.service.AuthService;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,7 +16,7 @@ import java.util.ResourceBundle;
 
 @Component
 public class LoginFormController implements Initializable {
-
+    private AuthService authService;
     private FormLoader formLoader;
     private AppUserService appUserService;
 
@@ -23,13 +24,15 @@ public class LoginFormController implements Initializable {
     @FXML private TextField tfUsername;
     @FXML private PasswordField pfPassword;
 
-    public LoginFormController(FormLoader formLoader, AppUserService appUserService) {
+    public LoginFormController(AuthService authService, FormLoader formLoader, AppUserService appUserService) {
+        this.authService = authService;
         this.formLoader = formLoader;
         this.appUserService = appUserService;
+
     }
 
     @FXML private void login(){
-        if(appUserService.authentication(tfUsername.getText(),pfPassword.getText())){
+        if(authService.authenticate(tfUsername.getText(),pfPassword.getText())){
             formLoader.loadMainForm();
         }else{
             lbInfo.setText("Нет такого пользователя, или неправильный пароль");
