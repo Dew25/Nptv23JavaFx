@@ -2,10 +2,12 @@ package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
+import ee.ivkhkdev.nptv23javafx.loaders.EditBookFormLoader;
+import ee.ivkhkdev.nptv23javafx.loaders.MenuFormLoader;
+import ee.ivkhkdev.nptv23javafx.loaders.SelectedBookFromModalityLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.Session;
 import ee.ivkhkdev.nptv23javafx.service.HistoryService;
-import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -22,7 +24,9 @@ import java.util.ResourceBundle;
 @Component
 public class MainFormController implements Initializable {
 
-    private final FormLoader formLoader;
+    private final MenuFormLoader menuFormLoader;
+    private final EditBookFormLoader editBookFormLoader;
+    private final SelectedBookFromModalityLoader selectedBookFromModalityLoader;
     private final BookService bookService;
     private final AppUserService appUserService;
     private final HistoryService historyService;
@@ -38,19 +42,21 @@ public class MainFormController implements Initializable {
     @FXML private HBox hbEditBook;
     @FXML private Label lbInfo;
 
-    public MainFormController(FormLoader formLoader, AppUserService appUserService, BookService bookService,HistoryService historyService) {
-        this.formLoader = formLoader;
+    public MainFormController(MenuFormLoader menuFormLoader, EditBookFormLoader editBookFormLoader, SelectedBookFromModalityLoader selectedBookFromModalityLoader, AppUserService appUserService, BookService bookService, HistoryService historyService) {
+        this.menuFormLoader = menuFormLoader;
+        this.editBookFormLoader = editBookFormLoader;
+        this.selectedBookFromModalityLoader = selectedBookFromModalityLoader;
         this.appUserService = appUserService;
         this.bookService = bookService;
         this.historyService = historyService;
     }
 
     @FXML private void showEditBookForm() {
-        formLoader.loadEditBookForm(tvListBooks.getSelectionModel().getSelectedItem());
+        editBookFormLoader.load(tvListBooks.getSelectionModel().getSelectedItem());
     }
     private void openBookDetails(Book book) {
         boolean readingBook = historyService.isReadingBook(book);
-        formLoader.loadSelectedBookFormModality(book,readingBook);
+        selectedBookFromModalityLoader.load(book,readingBook);
         tvListBooks.refresh();
     }
     public void initTableView(){
@@ -62,9 +68,8 @@ public class MainFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Добавляем форму меню первым элементом vbMainFormRoot
-        vbMainFormRoot.getChildren().addFirst(formLoader.loadMenuForm());
-
-
+        menuFormLoader.load();
+        vbMainFormRoot.getChildren().addFirst(menuFormLoader.getMenuFormController().getRootMenuForm());
         // Инициируем список книг
         tvListBooks.setItems(bookService.getObservableList());
 

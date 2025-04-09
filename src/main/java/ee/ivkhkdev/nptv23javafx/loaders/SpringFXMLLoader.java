@@ -1,4 +1,4 @@
-package ee.ivkhkdev.nptv23javafx.tools;
+package ee.ivkhkdev.nptv23javafx.loaders;
 
 import javafx.fxml.FXMLLoader;
 import org.springframework.context.ApplicationContext;

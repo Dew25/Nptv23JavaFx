@@ -1,6 +1,7 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
+import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.security.Role;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 @Component
 public class AdminPanelFormController implements Initializable {
 
-    private FormLoader formLoader;
+    private MainFormLoader mainFormLoader;
     private AppUserService appUserService;
     private AppUser updateUser;
     @FXML private TextField tfUser;
@@ -27,8 +28,8 @@ public class AdminPanelFormController implements Initializable {
     @FXML private TableColumn<AppUser,String> tcUsername;
     @FXML private TableColumn<AppUser,String> tcRoles;
     @FXML private TableView<AppUser> tvUsers;
-    public AdminPanelFormController(FormLoader formLoader, AppUserService appUserService) {
-        this.formLoader = formLoader;
+    public AdminPanelFormController(MainFormLoader mainFormLoader, AppUserService appUserService) {
+        this.mainFormLoader = mainFormLoader;
         this.appUserService = appUserService;
     }
     private void initFieldsForEdit(AppUser selectedUser) {
@@ -67,7 +68,7 @@ public class AdminPanelFormController implements Initializable {
     }
 
     @FXML private void showMainForm(){
-        formLoader.loadMainForm();
+        mainFormLoader.load();
     }
 
     @Override

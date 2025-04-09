@@ -2,6 +2,7 @@ package ee.ivkhkdev.nptv23javafx.tools;
 
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.controller.*;
+import ee.ivkhkdev.nptv23javafx.loaders.SpringFXMLLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import javafx.application.Platform;

@@ -8,6 +8,8 @@ import ee.ivkhkdev.nptv23javafx.security.SessionManager;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import org.springframework.stereotype.Component;
@@ -21,9 +23,8 @@ public class MenuFormController implements Initializable {
 
     private final AppUserService appUserService;
     private SessionManager sessionManager;
-
+    private Parent rootMenuForm;
     private final FormLoader formLoader;
-    private Session session;
     @FXML private Menu mBooks;
     @FXML private Menu mAdmin;
     @FXML private Menu mUsers;
@@ -97,5 +98,13 @@ public class MenuFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initMenuVisible();
+    }
+
+    public void setRootMenuForm(Parent root) {
+        this.rootMenuForm = root;
+    }
+
+    public Node getRootMenuForm() {
+        return rootMenuForm;
     }
 }
