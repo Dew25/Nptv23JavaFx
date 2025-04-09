@@ -82,7 +82,7 @@ public class MenuFormController implements Initializable {
                 miEnter.setVisible(false);
                 miProfile.setVisible(true);
                 miLogout.setVisible(true);
-            }else if(session.getCurrentUser().getRoles().contains(Role.USER.toString())){
+            }else if(sessionManager.getCurrentUser().getRoles().contains(Role.USER.toString())){
                 mBooks.setVisible(false);
                 mAdmin.setVisible(false);
                 mUsers.setVisible(true);
