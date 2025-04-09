@@ -26,7 +26,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
     @Override
     public List<AppUser> getList() {
-        if(sessionManager.isLoggedIn() && sessionManager.hasRole(Role.MANAGER)){
+        if(sessionManager.isLoggedIn() && (sessionManager.hasRole(Role.MANAGER) || sessionManager.hasRole(Role.ADMINISTRATOR))){
             return appUserRepository.findAll();
         }else{
             return new ArrayList<>();
@@ -70,7 +70,8 @@ public class AppUserServiceImpl implements AppUserService {
             if (appUser.getUsername().equals("admin")) {
                 return;
             }
-            if (appUser.getRoles().contains(role.toString())) {
+            if (appUser.getRoles().contains(role.toString())
+                    && role != Role.USER) {
                 appUser.getRoles().remove(role.toString());
                 saveAndLogin(appUser);
             }

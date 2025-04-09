@@ -37,10 +37,6 @@ public class AdminPanelFormController implements Initializable {
                 .stream().map(
                 role -> role.toString())
                 .collect(Collectors.joining(", ")));
-//        cbRoles.getItems().clear();
-//        for(Role role : Role.values()){
-//            cbRoles.getItems().add(role);
-//        }
         cbRoles.setCellFactory(lv -> new ListCell<>() {
             @Override
             protected void updateItem(Role role, boolean empty) {
@@ -52,11 +48,13 @@ public class AdminPanelFormController implements Initializable {
         cbRoles.getItems().addAll(Role.values());
     }
     @FXML private void btAddClick(){
+        if(cbRoles.getSelectionModel().isEmpty()){return;}
         appUserService.addRole(updateUser, cbRoles.getSelectionModel().getSelectedItem());
         tvUsers.refresh();
         clearFieldsAndSelected();
     }
     @FXML private void btRemoveClick(){
+        if(cbRoles.getSelectionModel().isEmpty()){return;}
         appUserService.removeRole(updateUser, cbRoles.getSelectionModel().getSelectedItem());
         tvUsers.refresh();
         clearFieldsAndSelected();
