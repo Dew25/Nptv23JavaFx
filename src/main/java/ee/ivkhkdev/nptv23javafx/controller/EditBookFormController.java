@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
+import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.service.AuthorServiceImpl;
@@ -22,7 +23,7 @@ import java.util.ResourceBundle;
 
 @Component
 public class EditBookFormController implements Initializable {
-    private FormLoader formLoader;
+    private MainFormLoader mainFormLoader;
     private BookService bookService;
     private AuthorService auhtorService;
     private Book editBook;
@@ -35,8 +36,8 @@ public class EditBookFormController implements Initializable {
     @FXML private TextField tfCount;
 
 
-    public EditBookFormController(FormLoader formLoader, BookService bookService, AuthorService authorService) {
-        this.formLoader = formLoader;
+    public EditBookFormController(MainFormLoader mainFormLoader, BookService bookService, AuthorService authorService) {
+        this.mainFormLoader = mainFormLoader;
         this.bookService = bookService;
         this.auhtorService = authorService;
     }
@@ -47,11 +48,11 @@ public class EditBookFormController implements Initializable {
         editBook.setQuantity(Integer.parseInt(tfQuantity.getText()));
         editBook.setCount(editBook.getQuantity());
         bookService.add(editBook);
-        formLoader.loadMainForm();
+        mainFormLoader.load();
     }
 
     @FXML private void goToMainForm() {
-        formLoader.loadMainForm();
+        mainFormLoader.load();
     }
 
     public void setEditBook(Book editBook) {

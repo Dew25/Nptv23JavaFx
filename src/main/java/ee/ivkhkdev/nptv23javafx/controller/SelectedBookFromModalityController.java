@@ -25,17 +25,15 @@ public class SelectedBookFromModalityController implements Initializable {
 
     private SessionManager sessionManager;
     private final HistoryService historyService;
-    private final AppUserService appUserService;
     private final MainFormController mainFormController;
     @FXML private VBox vbSelectedBookRoot;
     @FXML private Button btTakeOnBook;
     @FXML private Button btReturnBook;
     private Book book;
 
-    public SelectedBookFromModalityController(SessionManager sessionManager, HistoryService historyService, AppUserService appUserService, MainFormController mainFormController) {
+    public SelectedBookFromModalityController(SessionManager sessionManager, HistoryService historyService, MainFormController mainFormController) {
         this.sessionManager = sessionManager;
         this.historyService = historyService;
-        this.appUserService = appUserService;
         this.mainFormController = mainFormController;
     }
 

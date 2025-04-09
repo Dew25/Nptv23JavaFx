@@ -7,6 +7,7 @@ import ee.ivkhkdev.nptv23javafx.loaders.MenuFormLoader;
 import ee.ivkhkdev.nptv23javafx.loaders.SelectedBookFromModalityLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.Session;
+import ee.ivkhkdev.nptv23javafx.security.SessionManager;
 import ee.ivkhkdev.nptv23javafx.service.HistoryService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,9 +29,8 @@ public class MainFormController implements Initializable {
     private final EditBookFormLoader editBookFormLoader;
     private final SelectedBookFromModalityLoader selectedBookFromModalityLoader;
     private final BookService bookService;
-    private final AppUserService appUserService;
     private final HistoryService historyService;
-    private Session session;
+    private SessionManager sessionManager;
     @FXML private VBox vbMainFormRoot;
     @FXML private TableView<Book> tvListBooks;
     @FXML private TableColumn<Book, String> tcId;
@@ -42,11 +42,11 @@ public class MainFormController implements Initializable {
     @FXML private HBox hbEditBook;
     @FXML private Label lbInfo;
 
-    public MainFormController(MenuFormLoader menuFormLoader, EditBookFormLoader editBookFormLoader, SelectedBookFromModalityLoader selectedBookFromModalityLoader, AppUserService appUserService, BookService bookService, HistoryService historyService) {
+    public MainFormController(MenuFormLoader menuFormLoader, EditBookFormLoader editBookFormLoader, SelectedBookFromModalityLoader selectedBookFromModalityLoader, BookService bookService, HistoryService historyService, SessionManager sessionManager) {
         this.menuFormLoader = menuFormLoader;
         this.editBookFormLoader = editBookFormLoader;
         this.selectedBookFromModalityLoader = selectedBookFromModalityLoader;
-        this.appUserService = appUserService;
+        this.sessionManager = sessionManager;
         this.bookService = bookService;
         this.historyService = historyService;
     }
@@ -87,7 +87,7 @@ public class MainFormController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
                 if (newValue != null) {
-                    if(session.getCurrentUser().getRoles().contains("MANAGER")){
+                    if(sessionManager.getCurrentUser().getRoles().contains("MANAGER")){
                         hbEditBook.setVisible(true);
                     }else{
                         hbEditBook.setVisible(false);
@@ -102,9 +102,9 @@ public class MainFormController implements Initializable {
                 try {
                     openBookDetails(selectedBook);
                     lbInfo.setText(selectedBook.getTitle() + " - выдана пользователю "
-                            + session.getCurrentUser().getFirstname()
+                            + sessionManager.getCurrentUser().getFirstname()
                             + " "
-                            + session.getCurrentUser().getLastname());
+                            + sessionManager.getCurrentUser().getLastname());
                 }catch (Exception e){
                     lbInfo.setText(selectedBook.getTitle() + " - выдать не удалось");
                 }

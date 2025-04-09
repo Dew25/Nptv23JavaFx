@@ -1,11 +1,12 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
+import ee.ivkhkdev.nptv23javafx.interfaces.AuthorService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
+import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
+import ee.ivkhkdev.nptv23javafx.loaders.MenuFormLoader;
+import ee.ivkhkdev.nptv23javafx.loaders.NewBookFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
-import ee.ivkhkdev.nptv23javafx.service.AuthorServiceImpl;
-import ee.ivkhkdev.nptv23javafx.service.BookServiceImpl;
-import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,10 +18,10 @@ import java.util.ResourceBundle;
 
 @Component
 public class NewBookFormController implements Initializable {
-
-    private FormLoader formLoader;
-    private BookService bookService;
-    private AuthorServiceImpl auhtorService;
+    private final MainFormLoader mainFormLoader;
+    private final NewBookFormLoader newBookFormLoader;
+    private final BookService bookService;
+    private final AuthorService authorService;
 
     @FXML private Label lbInfo;
     @FXML private TextField tfTitle;
@@ -28,10 +29,11 @@ public class NewBookFormController implements Initializable {
     @FXML private TextField tfPublicationYear;
     @FXML private TextField tfQuantity;
 
-    public NewBookFormController(FormLoader formLoader, BookService bookService, AuthorServiceImpl authorServiceImpl) {
-        this.formLoader = formLoader;
+    public NewBookFormController(MainFormLoader mainFormLoader, NewBookFormLoader newBookFormLoader, BookService bookService, AuthorService authorService) {
+        this.mainFormLoader = mainFormLoader;
+        this.newBookFormLoader = newBookFormLoader;
         this.bookService = bookService;
-        this.auhtorService = authorServiceImpl;
+        this.authorService = authorService;
     }
     @FXML private void create(){
         Book book = new Book();
@@ -46,17 +48,17 @@ public class NewBookFormController implements Initializable {
         book.setQuantity(Integer.parseInt(tfQuantity.getText()));
         book.setCount(book.getQuantity());
         bookService.add(book);
-        formLoader.loadMainForm();
+        newBookFormLoader.load();
     }
 
     @FXML private void goToMainForm(){
-        formLoader.loadMainForm();
+        mainFormLoader.load();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lvAuthors.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        List<Author> authors = auhtorService.getList();
+        List<Author> authors = authorService.getList();
         lvAuthors.getItems().setAll(FXCollections.observableArrayList(authors));
         lvAuthors.setCellFactory(lv -> new ListCell<>() {
             @Override
@@ -65,7 +67,7 @@ public class NewBookFormController implements Initializable {
                 if (empty || author == null) {
                     setText(null);
                 } else {
-                    setText(author.getId() + ". " + author.getFirstname() + " " + author.getLastname());
+                    setText(String.format("%d. %s %s",author.getId(), author.getFirstname(), author.getLastname()));
                 }
             }
         });

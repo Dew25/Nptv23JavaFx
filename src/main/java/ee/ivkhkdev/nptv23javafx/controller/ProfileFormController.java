@@ -1,6 +1,7 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
+import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.security.Role;
 import ee.ivkhkdev.nptv23javafx.security.SessionManager;
@@ -18,9 +19,8 @@ import java.util.ResourceBundle;
 
 @Component
 public class ProfileFormController implements Initializable {
-
+    private final MainFormLoader mainFormLoader;
     private final AppUserService appUserService;
-    private final FormLoader formLoader;
     private final SessionManager sessionManager;
 
 
@@ -30,9 +30,9 @@ public class ProfileFormController implements Initializable {
     @FXML private PasswordField pfPassword;
     @FXML private TextField tfFirstname;
 
-    public ProfileFormController(AppUserService appUserService, FormLoader formLoader, SessionManager sessionManager) {
+    public ProfileFormController(AppUserService appUserService, MainFormLoader mainFormLoader, SessionManager sessionManager) {
         this.appUserService = appUserService;
-        this.formLoader = formLoader;
+        this.mainFormLoader = mainFormLoader;
         this.sessionManager = sessionManager;
 
     }
@@ -49,15 +49,15 @@ public class ProfileFormController implements Initializable {
             Optional<AppUser> appUserOptional = appUserService.add(appUser);
             if (appUserOptional.isPresent()) {
                 sessionManager.login(appUserOptional.get());
-                formLoader.loadMainForm("Профиль пользователя обновлен");
+                mainFormLoader.load("Профиль пользователя обновлен");
             } else {
-                formLoader.loadMainForm("Обновить профиль польздвателя не удалось");
+                mainFormLoader.load("Обновить профиль польздвателя не удалось");
             }
         }
     }
     @FXML
     private void showMianForm() {
-        formLoader.loadMainForm();
+        mainFormLoader.load();
     }
 
     @Override

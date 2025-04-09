@@ -1,6 +1,7 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
+import ee.ivkhkdev.nptv23javafx.loaders.*;
 import ee.ivkhkdev.nptv23javafx.model.entity.Session;
 import ee.ivkhkdev.nptv23javafx.model.repository.BookRepository;
 import ee.ivkhkdev.nptv23javafx.security.Role;
@@ -20,11 +21,17 @@ import java.util.ResourceBundle;
 
 @Component
 public class MenuFormController implements Initializable {
+    private final AuthorFormLoader authorFormLoader;
+    private final NewBookFormLoader newBookFormLoader;
+    private final LoginFormLoader loginFormLoader;
+    private final TackeBookFormLoader tackeBookFormLoader;
+    private final ListAuthorsFormLoader listAuthorsFormLoader;
+    private final ProfileFormLoader profileFormLoader;
+    private final AdminPanelFormLoader adminPanelFormLoader;
 
-    private final AppUserService appUserService;
-    private SessionManager sessionManager;
+    private final SessionManager sessionManager;
     private Parent rootMenuForm;
-    private final FormLoader formLoader;
+
     @FXML private Menu mBooks;
     @FXML private Menu mAdmin;
     @FXML private Menu mUsers;
@@ -33,39 +40,42 @@ public class MenuFormController implements Initializable {
     @FXML private MenuItem miLogout;
 
 
-    public MenuFormController( SessionManager sessionManager, FormLoader formLoader, AppUserService appUserService) {
-
+    public MenuFormController(AuthorFormLoader authorFormLoader, SessionManager sessionManager, NewBookFormLoader newBookFormLoader, LoginFormLoader loginFormLoader, TackeBookFormLoader tackeBookFormLoader, ListAuthorsFormLoader listAuthorsFormLoader, ProfileFormLoader profileFormLoader, AdminPanelFormLoader adminPanelFormLoader) {
+        this.authorFormLoader = authorFormLoader;
         this.sessionManager = sessionManager;
-        this.formLoader = formLoader;
-        this.appUserService = appUserService;
-
+        this.newBookFormLoader = newBookFormLoader;
+        this.loginFormLoader = loginFormLoader;
+        this.tackeBookFormLoader = tackeBookFormLoader;
+        this.listAuthorsFormLoader = listAuthorsFormLoader;
+        this.profileFormLoader = profileFormLoader;
+        this.adminPanelFormLoader = adminPanelFormLoader;
     }
 
     @FXML private void showAuthorForm(){
-        formLoader.loadAuthorForm();
+        authorFormLoader.load();;
     }
     @FXML private void showBookForm() {
-        formLoader.loadNewBookForm();
+        newBookFormLoader.load();
     }
     @FXML private void showLoginForm(){
-        formLoader.loadLoginForm();
+        loginFormLoader.load();
     }
     @FXML private void logout(){
         this.sessionManager.logout();
-        formLoader.loadLoginForm();
+        loginFormLoader.load();
     }
     @FXML private void showTakedBookForm(){
-        formLoader.loadTakedBookForm();
+        tackeBookFormLoader.load();
     }
 
     @FXML private void showListAuthorsForm(){
-        formLoader.loadListAuthorForm();
+        listAuthorsFormLoader.load();
     }
     @FXML private void showProfileForm(){
-        formLoader.loadProfileForm();
+        profileFormLoader.load();
     }
     @FXML private void showAdminPanelForm(){
-        formLoader.loadAdminPanelForm();
+        adminPanelFormLoader.load();
     }
     private void initMenuVisible(){
         if(sessionManager.isLoggedIn()){

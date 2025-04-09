@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
+import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.interfaces.AuthorService;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
@@ -12,14 +13,14 @@ import java.util.ResourceBundle;
 
 @Component
 public class AuthorFormController implements Initializable {
-
-    private FormLoader formLoader;
-    private AuthorService authorService;
+    private final MainFormLoader mainFormLoader;
+    private final AuthorService authorService;
     @FXML private TextField tfFirstname;
     @FXML private TextField tfLastname;
 
-    public AuthorFormController(FormLoader formLoader, AuthorService authorService) {
-        this.formLoader = formLoader;
+    public AuthorFormController(MainFormLoader mainFormLoader, AuthorService authorService) {
+        this.mainFormLoader = mainFormLoader;
+
         this.authorService = authorService;
     }
 
@@ -28,10 +29,10 @@ public class AuthorFormController implements Initializable {
         author.setFirstname(tfFirstname.getText());
         author.setLastname(tfLastname.getText());
         authorService.add(author);
-        formLoader.loadMainForm();
+        mainFormLoader.load();
     }
     @FXML private void goToMainForm() {
-        formLoader.loadMainForm();
+        mainFormLoader.load();
     }
 
     @Override

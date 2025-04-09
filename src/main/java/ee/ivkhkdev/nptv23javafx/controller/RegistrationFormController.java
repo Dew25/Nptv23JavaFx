@@ -2,6 +2,7 @@ package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
+import ee.ivkhkdev.nptv23javafx.loaders.RegistrationFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.model.entity.Session;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
@@ -18,16 +19,16 @@ import java.util.ResourceBundle;
 public class RegistrationFormController implements Initializable {
 
     private final AppUserService appUserService;
-    private final FormLoader formLoader;
+    private final RegistrationFormLoader registrationFormLoader;
 
     @FXML private TextField tfLastname;
     @FXML private TextField tfUsername;
     @FXML private PasswordField pfPassword;
     @FXML private TextField tfFirstname;
 
-    public RegistrationFormController(AppUserService appUserService, FormLoader formLoader) {
+    public RegistrationFormController(AppUserService appUserService, RegistrationFormLoader registrationFormLoader) {
         this.appUserService = appUserService;
-        this.formLoader = formLoader;
+        this.registrationFormLoader = registrationFormLoader;
     }
 
     @FXML private void registration(){
@@ -39,7 +40,7 @@ public class RegistrationFormController implements Initializable {
             newUser.setPassword(pfPassword.getText());
             newUser.getRoles().add("USER");
             appUserService.add(newUser);
-            formLoader.loadLoginForm();
+            registrationFormLoader.load();
         }catch (Exception e){
             throw new RuntimeException(e);
         }

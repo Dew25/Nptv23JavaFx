@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class SelectedAuthorFormController {
     private Author author;
-    private FormLoader formLoader;
-    private AuthorService authorService;
+
+
     @FXML private TextField tfFirstname;
     @FXML private TextField tfLastname;
     @FXML private TextField tfId;
-    public SelectedAuthorFormController(FormLoader formLoader, AuthorService authorService) {
-        this.formLoader = formLoader;
-        this.authorService = authorService;
+    public SelectedAuthorFormController(AuthorService authorService) {
+
+
     }
 
     public void setAuthor(Author author) {

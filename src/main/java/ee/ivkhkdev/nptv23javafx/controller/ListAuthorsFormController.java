@@ -1,6 +1,10 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AuthorService;
+import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
+import ee.ivkhkdev.nptv23javafx.loaders.SelectedAuthorFormLoader;
+import ee.ivkhkdev.nptv23javafx.loaders.SelectedAuthorFormModalityLoader;
+import ee.ivkhkdev.nptv23javafx.loaders.SelectedBookFromModalityLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
@@ -19,19 +23,21 @@ import java.util.ResourceBundle;
 
 @Component
 public class ListAuthorsFormController implements Initializable {
-    private FormLoader formLoader;
-    private AuthorService authorService;
+    private final MainFormLoader mainFormLoader;
+    private final SelectedAuthorFormModalityLoader selectedAuthorFormModalityLoader;
+    private final AuthorService authorService;
     @FXML private ListView<Author> lvAuthors;
     @FXML private ListView<Book> lvAuthorBooks;
     @FXML private Label lbInfo;
     @FXML private VBox vbListSelectedAuthorsBooks;
 
-    public ListAuthorsFormController(AuthorService authorService, FormLoader formLoader) {
+    public ListAuthorsFormController(AuthorService authorService, MainFormLoader mainFormLoader, SelectedAuthorFormModalityLoader selectedAuthorFormModalityLoader) {
         this.authorService = authorService;
-        this.formLoader = formLoader;
+        this.mainFormLoader = mainFormLoader;
+        this.selectedAuthorFormModalityLoader = selectedAuthorFormModalityLoader;
     }
     @FXML private void goToMainForm(){
-        formLoader.loadMainForm();
+        mainFormLoader.load();
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,7 +73,7 @@ public class ListAuthorsFormController implements Initializable {
                 lvAuthorBooks.setItems(observableList);
                 vbListSelectedAuthorsBooks.setVisible(true);
             }else if (event.getClickCount() == 2 && !lvAuthors.getSelectionModel().isEmpty()) {
-                formLoader.loadSelectedAuthorFormModality(lvAuthors.getSelectionModel().getSelectedItem());
+                selectedAuthorFormModalityLoader.load(lvAuthors.getSelectionModel().getSelectedItem());
             }
         });
 
