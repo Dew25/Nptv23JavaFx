@@ -63,7 +63,9 @@ public class MenuFormController implements Initializable {
     @FXML private void showProfileForm(){
         formLoader.loadProfileForm();
     }
-
+    @FXML private void showAdminPanelForm(){
+        formLoader.loadAdminPanelForm();
+    }
     private void initMenuVisible(){
         if(sessionManager.isLoggedIn()){
             if(sessionManager.getCurrentUser().getRoles().contains(Role.ADMINISTRATOR.toString())){

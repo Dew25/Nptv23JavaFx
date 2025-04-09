@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 
 @Component
 public class SelectedBookFromModalityController implements Initializable {
-    private Role role;
+
     private SessionManager sessionManager;
     private final HistoryService historyService;
     private final AppUserService appUserService;
@@ -32,8 +32,7 @@ public class SelectedBookFromModalityController implements Initializable {
     @FXML private Button btReturnBook;
     private Book book;
 
-    public SelectedBookFromModalityController(Role role, SessionManager sessionManager, HistoryService historyService, AppUserService appUserService, MainFormController mainFormController) {
-        this.role = role;
+    public SelectedBookFromModalityController(SessionManager sessionManager, HistoryService historyService, AppUserService appUserService, MainFormController mainFormController) {
         this.sessionManager = sessionManager;
         this.historyService = historyService;
         this.appUserService = appUserService;

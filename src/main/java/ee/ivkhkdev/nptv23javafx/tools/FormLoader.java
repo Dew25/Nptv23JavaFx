@@ -217,4 +217,17 @@ public class FormLoader {
             throw new RuntimeException(e);
         }
     }
+    public void loadAdminPanelForm() {
+        FXMLLoader fxmlLoader = springFXMLLoader.load("/view/admin/adminPanelForm.fxml");
+        Parent root;
+        try {
+            root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            getPrimaryStage().setScene(scene);
+            getPrimaryStage().setTitle("Администрирование");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

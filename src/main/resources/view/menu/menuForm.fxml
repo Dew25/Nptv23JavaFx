@@ -5,7 +5,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="vbMenuFormRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controller.MenuFormController">
+<VBox fx:id="vbMenuFormRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controller.MenuFormController">
    <children>
       <MenuBar>
         <menus>
@@ -24,7 +24,11 @@
                 <MenuItem fx:id="miProfile" mnemonicParsing="false" onAction="#showProfileForm" text="Профиль" />
             </items>
           </Menu>
-          <Menu fx:id="mAdmin" mnemonicParsing="false" text="Administrator" />
+          <Menu fx:id="mAdmin" mnemonicParsing="false" text="Administrator">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showAdminPanelForm" text="Панель администратора" />
+               </items>
+          </Menu>
         </menus>
       </MenuBar>
    </children>

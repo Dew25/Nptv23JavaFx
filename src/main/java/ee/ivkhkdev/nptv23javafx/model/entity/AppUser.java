@@ -1,9 +1,14 @@
 package ee.ivkhkdev.nptv23javafx.model.entity;
 
 import jakarta.persistence.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class AppUser {
@@ -67,10 +72,10 @@ public class AppUser {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         AppUser appUser = (AppUser) o;
-        return Objects.equals(id, appUser.id) && Objects.equals(username, appUser.username) && Objects.equals(password, appUser.password) && Objects.equals(firstname, appUser.firstname) && Objects.equals(lastname, appUser.lastname);
+        return Objects.equals(id, appUser.id) && Objects.equals(username, appUser.username) && Objects.equals(password, appUser.password) && Objects.equals(firstname, appUser.firstname) && Objects.equals(lastname, appUser.lastname) && Objects.equals(roles, appUser.roles);
     }
 
     @Override
@@ -82,6 +87,7 @@ public class AppUser {
     public String toString() {
         return "AppUser{" +
                 "id=" + id +
+                ", roles="+ Arrays.toString(roles.toArray()) +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstname + '\'' +
@@ -95,5 +101,29 @@ public class AppUser {
 
     public void setRoles(Set<String> roles) {
         this.roles = roles;
+    }
+    @Transient
+    public StringProperty idProperty() {
+        return new SimpleStringProperty(id.toString());
+    }
+    @Transient
+    public StringProperty firstnameProperty() {
+        return new SimpleStringProperty(firstname);
+    }
+    @Transient
+    public StringProperty lastnameProperty() {
+        return new SimpleStringProperty(lastname);
+    }
+    @Transient
+    public StringProperty usernameProperty() {
+        return new SimpleStringProperty(username);
+    }
+    @Transient
+    public StringProperty rolesProperty() {
+        // Преобразуем коллекцию ролей в строку
+        String roles = getRoles().stream()
+                .map(role -> role.toString() )
+                .collect(Collectors.joining(", "));
+        return new SimpleStringProperty(roles);
     }
 }

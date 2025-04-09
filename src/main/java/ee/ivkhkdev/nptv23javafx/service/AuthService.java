@@ -20,15 +20,15 @@ public class AuthService {
     public boolean authenticate(String username, String password) {
         Optional<AppUser> optionalAppUser = appUserRepository.findByUsername(username);
         if(optionalAppUser.isPresent()) {
-            return false;
+            AppUser loginUser = optionalAppUser.get();
+            if(loginUser.getPassword().equals(password)) {
+                sessionManager.login(loginUser);
+                return true;
+            }else{
+                return false;
+            }
         }
-        AppUser loginUser = optionalAppUser.get();
-        if(loginUser.getPassword().equals(password)) {
-            sessionManager.login(loginUser);
-            return true;
-        }else{
-            return false;
-        }
+        return false;
 
     }
 
