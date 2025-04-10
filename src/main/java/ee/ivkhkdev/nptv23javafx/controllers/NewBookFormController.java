@@ -1,9 +1,8 @@
-package ee.ivkhkdev.nptv23javafx.controller;
+package ee.ivkhkdev.nptv23javafx.controllers;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AuthorService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
-import ee.ivkhkdev.nptv23javafx.loaders.MenuFormLoader;
 import ee.ivkhkdev.nptv23javafx.loaders.NewBookFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;

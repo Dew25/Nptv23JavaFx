@@ -1,4 +1,4 @@
-package ee.ivkhkdev.nptv23javafx.controller;
+package ee.ivkhkdev.nptv23javafx.controllers;
 
 import ee.ivkhkdev.nptv23javafx.loaders.*;
 import ee.ivkhkdev.nptv23javafx.security.Role;
@@ -12,7 +12,6 @@ import javafx.scene.control.MenuItem;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component

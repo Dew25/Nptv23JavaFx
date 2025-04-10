@@ -1,6 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.loaders;
 
-import ee.ivkhkdev.nptv23javafx.controller.SelectedAuthorFormController;
+import ee.ivkhkdev.nptv23javafx.controllers.SelectedAuthorFormController;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -1,4 +1,4 @@
-package ee.ivkhkdev.nptv23javafx.controller;
+package ee.ivkhkdev.nptv23javafx.controllers;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;

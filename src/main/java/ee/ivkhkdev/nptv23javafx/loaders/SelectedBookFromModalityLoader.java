@@ -1,6 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.loaders;
 
-import ee.ivkhkdev.nptv23javafx.controller.SelectedBookFromModalityController;
+import ee.ivkhkdev.nptv23javafx.controllers.SelectedBookFromModalityController;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

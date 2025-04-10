@@ -1,6 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.loaders;
 
-import ee.ivkhkdev.nptv23javafx.controller.MainFormController;
+import ee.ivkhkdev.nptv23javafx.controllers.MainFormController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

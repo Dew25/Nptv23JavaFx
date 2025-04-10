@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vbAuthorFormRoot" prefHeight="236.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controller.AuthorFormController">
+<VBox fx:id="vbAuthorFormRoot" prefHeight="236.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controllers.AuthorFormController">
    <children>
       <Label alignment="CENTER" prefHeight="89.0" prefWidth="600.0" text="Новый автор">
          <font>

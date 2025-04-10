@@ -1,12 +1,8 @@
-package ee.ivkhkdev.nptv23javafx.controller;
+package ee.ivkhkdev.nptv23javafx.controllers;
 
-import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
-import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.interfaces.HistoryService;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
-import ee.ivkhkdev.nptv23javafx.model.entity.Session;
-import ee.ivkhkdev.nptv23javafx.security.Role;
 import ee.ivkhkdev.nptv23javafx.security.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 @Component

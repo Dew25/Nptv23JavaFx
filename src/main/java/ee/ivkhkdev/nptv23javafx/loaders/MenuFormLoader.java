@@ -1,6 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.loaders;
 
-import ee.ivkhkdev.nptv23javafx.controller.MenuFormController;
+import ee.ivkhkdev.nptv23javafx.controllers.MenuFormController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import org.springframework.stereotype.Component;

@@ -1,8 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.service;
 
-import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
-import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.repository.AppUserRepository;
 import ee.ivkhkdev.nptv23javafx.security.Role;
 import ee.ivkhkdev.nptv23javafx.security.SessionManager;
@@ -15,11 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AppUserServiceImpl implements AppUserService {
+public class AppUserService implements ee.ivkhkdev.nptv23javafx.interfaces.AppUserService{
 
     private SessionManager sessionManager;
     private AppUserRepository appUserRepository;
-    public AppUserServiceImpl(SessionManager sessionManager, AppUserRepository repository) {
+    public AppUserService(SessionManager sessionManager, AppUserRepository repository) {
         this.sessionManager = sessionManager;
         this.appUserRepository = repository;
         initSuperUser();

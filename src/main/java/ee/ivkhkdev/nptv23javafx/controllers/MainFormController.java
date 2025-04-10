@@ -1,12 +1,10 @@
-package ee.ivkhkdev.nptv23javafx.controller;
+package ee.ivkhkdev.nptv23javafx.controllers;
 
-import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
 import ee.ivkhkdev.nptv23javafx.loaders.EditBookFormLoader;
 import ee.ivkhkdev.nptv23javafx.loaders.MenuFormLoader;
 import ee.ivkhkdev.nptv23javafx.loaders.SelectedBookFromModalityLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
-import ee.ivkhkdev.nptv23javafx.model.entity.Session;
 import ee.ivkhkdev.nptv23javafx.security.SessionManager;
 import ee.ivkhkdev.nptv23javafx.service.HistoryService;
 import javafx.beans.value.ChangeListener;

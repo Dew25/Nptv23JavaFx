@@ -1,4 +1,4 @@
-package ee.ivkhkdev.nptv23javafx.controller;
+package ee.ivkhkdev.nptv23javafx.controllers;
 
 import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
@@ -14,12 +14,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
-public class ListTakedBookFormController implements Initializable {
+public class ListTakedBooksFormController implements Initializable {
     private MainFormLoader mainFormLoader;
     private HistoryService historyService;
     @FXML private ListView<History> lvTackedBookRoot;
 
-    public ListTakedBookFormController(MainFormLoader mainFormLoader, HistoryService historyService) {
+    public ListTakedBooksFormController(MainFormLoader mainFormLoader, HistoryService historyService) {
         this.mainFormLoader = mainFormLoader;
         this.historyService = historyService;
     }
@@ -27,6 +27,7 @@ public class ListTakedBookFormController implements Initializable {
     @FXML private void goToMainForm(){
         mainFormLoader.load();
     }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lvTackedBookRoot.setItems(historyService.getObservableTakenList());
@@ -40,9 +41,9 @@ public class ListTakedBookFormController implements Initializable {
                     setText(
                             history.getId().toString()
                             + ". " + history.getBook().getTitle()
-                            + " " + ((Integer)history.getBook().getCount()).toString()
+                            + ". Читает: "+ history.getAppUser().getFirstname()
+                            + " " + history.getAppUser().getLastname()
                             + ". Выдана: "+history.getTakeOnDate().toString()
-                            + ". Возвращена: "+history.getReturnDate()
                     );
                 }
             }

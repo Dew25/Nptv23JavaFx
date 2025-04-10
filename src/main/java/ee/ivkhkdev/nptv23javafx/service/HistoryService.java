@@ -35,7 +35,7 @@ private final HistoryRepository historyRepository;
     @Override
     public Optional<History> add(History history) {
         if(sessionManager.isLoggedIn() || sessionManager.getCurrentUser().getRoles().contains(Role.USER.toString())){
-            if(history == null || history.getBook().getCount() <= 0){
+            if(history == null || history.getBook().getCount() < 1){
                 return Optional.empty();
             }
             //Уменьшаем число книг в библиотеке на 1
@@ -66,7 +66,7 @@ private final HistoryRepository historyRepository;
         if(sessionManager.getCurrentUser() == null){
             return false;
         }
-        List<History> listHistoryWithReadingBook = historyRepository.findByBook_IdAndAppUser_Id(book.getId(), sessionManager.getCurrentUser().getId());
+        List<History> listHistoryWithReadingBook = historyRepository.findByBook_IdAndAppUser_IdAndReturnDate(book.getId(), sessionManager.getCurrentUser().getId(), null);
         for(History history : listHistoryWithReadingBook){
             if(history.getReturnDate() == null){
                 return true;
@@ -78,7 +78,7 @@ private final HistoryRepository historyRepository;
     @Override
     public boolean returnBook(Book book) {
         if(sessionManager.isLoggedIn() || sessionManager.getCurrentUser().getRoles().contains(Role.USER.toString())){}
-        List<History> listHistory = historyRepository.findByBook_IdAndAppUser_Id(book.getId(), sessionManager.getCurrentUser().getId());
+        List<History> listHistory = historyRepository.findByBook_IdAndAppUser_IdAndReturnDate(book.getId(), sessionManager.getCurrentUser().getId(), null);
         for (History history : listHistory) {
             if (history.getReturnDate() == null && history.getBook().getQuantity() > history.getBook().getCount()){
                 history.setReturnDate(LocalDate.now());

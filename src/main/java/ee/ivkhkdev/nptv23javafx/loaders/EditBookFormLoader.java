@@ -1,6 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.loaders;
 
-import ee.ivkhkdev.nptv23javafx.controller.EditBookFormController;
+import ee.ivkhkdev.nptv23javafx.controllers.EditBookFormController;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
