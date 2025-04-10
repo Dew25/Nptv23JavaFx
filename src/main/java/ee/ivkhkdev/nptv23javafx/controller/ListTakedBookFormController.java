@@ -1,9 +1,8 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
+import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
 import ee.ivkhkdev.nptv23javafx.service.HistoryService;
-import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
@@ -16,17 +15,17 @@ import java.util.ResourceBundle;
 
 @Component
 public class ListTakedBookFormController implements Initializable {
-    private FormLoader formLoader;
+    private MainFormLoader mainFormLoader;
     private HistoryService historyService;
     @FXML private ListView<History> lvTackedBookRoot;
 
-    public ListTakedBookFormController(FormLoader formLoader, HistoryService historyService) {
-        this.formLoader = formLoader;
+    public ListTakedBookFormController(MainFormLoader mainFormLoader, HistoryService historyService) {
+        this.mainFormLoader = mainFormLoader;
         this.historyService = historyService;
     }
 
     @FXML private void goToMainForm(){
-        formLoader.loadMainForm();
+        mainFormLoader.load();
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

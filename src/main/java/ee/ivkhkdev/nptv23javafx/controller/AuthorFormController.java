@@ -3,7 +3,6 @@ package ee.ivkhkdev.nptv23javafx.controller;
 import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.interfaces.AuthorService;
-import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;

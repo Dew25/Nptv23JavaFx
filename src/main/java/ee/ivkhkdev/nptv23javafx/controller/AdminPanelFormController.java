@@ -4,7 +4,6 @@ import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.security.Role;
-import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;

@@ -2,12 +2,9 @@ package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AuthorService;
 import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
-import ee.ivkhkdev.nptv23javafx.loaders.SelectedAuthorFormLoader;
 import ee.ivkhkdev.nptv23javafx.loaders.SelectedAuthorFormModalityLoader;
-import ee.ivkhkdev.nptv23javafx.loaders.SelectedBookFromModalityLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Author;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
-import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;

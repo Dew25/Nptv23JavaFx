@@ -1,6 +1,7 @@
 package ee.ivkhkdev.nptv23javafx.loaders;
 
 import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class SpringFXMLLoader {
 
     private final ApplicationContext applicationContext;
-
+    private Stage primaryStage;
     public SpringFXMLLoader(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
@@ -17,5 +18,13 @@ public class SpringFXMLLoader {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
         fxmlLoader.setControllerFactory(applicationContext::getBean);
         return fxmlLoader;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 }

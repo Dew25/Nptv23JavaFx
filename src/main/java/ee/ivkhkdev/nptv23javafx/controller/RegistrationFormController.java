@@ -4,8 +4,6 @@ import ee.ivkhkdev.nptv23javafx.Nptv23JavaFxApplication;
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.loaders.RegistrationFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
-import ee.ivkhkdev.nptv23javafx.model.entity.Session;
-import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;

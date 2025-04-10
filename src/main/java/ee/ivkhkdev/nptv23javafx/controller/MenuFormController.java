@@ -1,12 +1,8 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
-import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
 import ee.ivkhkdev.nptv23javafx.loaders.*;
-import ee.ivkhkdev.nptv23javafx.model.entity.Session;
-import ee.ivkhkdev.nptv23javafx.model.repository.BookRepository;
 import ee.ivkhkdev.nptv23javafx.security.Role;
 import ee.ivkhkdev.nptv23javafx.security.SessionManager;
-import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -105,16 +101,15 @@ public class MenuFormController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        initMenuVisible();
-    }
-
     public void setRootMenuForm(Parent root) {
         this.rootMenuForm = root;
     }
 
     public Node getRootMenuForm() {
         return rootMenuForm;
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        initMenuVisible();
     }
 }

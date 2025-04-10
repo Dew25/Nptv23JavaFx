@@ -1,9 +1,9 @@
 package ee.ivkhkdev.nptv23javafx.controller;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
-import ee.ivkhkdev.nptv23javafx.service.AppUserServiceImpl;
+import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
+import ee.ivkhkdev.nptv23javafx.loaders.RegistrationFormLoader;
 import ee.ivkhkdev.nptv23javafx.service.AuthService;
-import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -17,29 +17,30 @@ import java.util.ResourceBundle;
 @Component
 public class LoginFormController implements Initializable {
     private AuthService authService;
-    private FormLoader formLoader;
     private AppUserService appUserService;
-
+    private MainFormLoader mainFormLoader;
+    private final RegistrationFormLoader registrationFormLoader;
     @FXML private Label lbInfo;
     @FXML private TextField tfUsername;
     @FXML private PasswordField pfPassword;
 
-    public LoginFormController(AuthService authService, FormLoader formLoader, AppUserService appUserService) {
+    public LoginFormController(AuthService authService, MainFormLoader mainFormLoader, AppUserService appUserService, RegistrationFormLoader registrationFormLoader) {
         this.authService = authService;
-        this.formLoader = formLoader;
+        this.mainFormLoader = mainFormLoader;
         this.appUserService = appUserService;
 
+        this.registrationFormLoader = registrationFormLoader;
     }
 
     @FXML private void login(){
         if(authService.authenticate(tfUsername.getText(),pfPassword.getText())){
-            formLoader.loadMainForm();
+            mainFormLoader.load();
         }else{
             lbInfo.setText("Нет такого пользователя, или неправильный пароль");
         }
     }
     @FXML private void showRegistrationForm(){
-        formLoader.loadRegistrationForm();
+        registrationFormLoader.load();
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

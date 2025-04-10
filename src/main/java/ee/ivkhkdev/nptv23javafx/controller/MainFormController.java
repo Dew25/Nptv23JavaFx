@@ -52,7 +52,9 @@ public class MainFormController implements Initializable {
     }
 
     @FXML private void showEditBookForm() {
-        editBookFormLoader.load(tvListBooks.getSelectionModel().getSelectedItem());
+        if(!tvListBooks.getSelectionModel().isEmpty()){
+            editBookFormLoader.load(tvListBooks.getSelectionModel().getSelectedItem());
+        }
     }
     private void openBookDetails(Book book) {
         boolean readingBook = historyService.isReadingBook(book);

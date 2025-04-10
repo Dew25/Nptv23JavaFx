@@ -6,7 +6,6 @@ import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.service.AuthorServiceImpl;
 import ee.ivkhkdev.nptv23javafx.interfaces.AuthorService;
 import ee.ivkhkdev.nptv23javafx.interfaces.BookService;
-import ee.ivkhkdev.nptv23javafx.tools.FormLoader;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

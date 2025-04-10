@@ -9,12 +9,14 @@ import javafx.stage.WindowEvent;
 
 public abstract class AbstractFormLoader{
     private final SpringFXMLLoader springFXMLLoader;
-
     public AbstractFormLoader(SpringFXMLLoader springFXMLLoader) {
         this.springFXMLLoader = springFXMLLoader;
     }
-    protected Stage getPrimaryStage(){
-        return Nptv23JavaFxApplication.primaryStage;
+    public Stage getPrimaryStage(){
+        return springFXMLLoader.getPrimaryStage();
+    }
+    public void setPrimaryStage(Stage primaryStage){
+        this.springFXMLLoader.setPrimaryStage(primaryStage);
     }
     protected SpringFXMLLoader getSpringFXMLLoader(){
         return springFXMLLoader;
