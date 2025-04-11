@@ -1,6 +1,8 @@
 package ee.ivkhkdev.nptv23javafx.controllers;
 
 import ee.ivkhkdev.nptv23javafx.interfaces.AppUserService;
+import ee.ivkhkdev.nptv23javafx.loaders.LoginFormLoader;
+import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.loaders.RegistrationFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import javafx.fxml.FXML;
@@ -17,15 +19,16 @@ public class RegistrationFormController implements Initializable {
 
     private final AppUserService appUserService;
     private final RegistrationFormLoader registrationFormLoader;
-
+    private final LoginFormLoader loginFormLoader;
     @FXML private TextField tfLastname;
     @FXML private TextField tfUsername;
     @FXML private PasswordField pfPassword;
     @FXML private TextField tfFirstname;
 
-    public RegistrationFormController(AppUserService appUserService, RegistrationFormLoader registrationFormLoader) {
+    public RegistrationFormController(AppUserService appUserService, RegistrationFormLoader registrationFormLoader, LoginFormLoader loginFormLoader) {
         this.appUserService = appUserService;
         this.registrationFormLoader = registrationFormLoader;
+        this.loginFormLoader = loginFormLoader;
     }
 
     @FXML private void registration(){
@@ -41,8 +44,10 @@ public class RegistrationFormController implements Initializable {
         }catch (Exception e){
             throw new RuntimeException(e);
         }
+    }
 
-
+    @FXML private void goToLoginForm(){
+        loginFormLoader.load();
     }
 
     @Override
