@@ -12,6 +12,7 @@ public class LoginFormLoader extends AbstractFormLoader{
     public LoginFormLoader(SpringFXMLLoader springFXMLLoader) {
         super(springFXMLLoader);
     }
+    @Override
     public void load(){
         FXMLLoader fxmlLoader = getSpringFXMLLoader().load("/view/user/loginForm.fxml");
         Parent root;

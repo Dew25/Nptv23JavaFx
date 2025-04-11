@@ -43,7 +43,7 @@ public class EditBookFormController implements Initializable {
         editBook.getAuthors().addAll(lvAuthors.getSelectionModel().getSelectedItems());
         editBook.setPublicationYear(Integer.parseInt(tfPublicationYear.getText()));
         editBook.setQuantity(Integer.parseInt(tfQuantity.getText()));
-        editBook.setCount(editBook.getQuantity());
+        editBook.setCount(Integer.parseInt(tfCount.getText()));
         bookService.add(editBook);
         mainFormLoader.load();
     }

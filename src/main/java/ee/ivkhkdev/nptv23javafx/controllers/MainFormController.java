@@ -5,8 +5,9 @@ import ee.ivkhkdev.nptv23javafx.loaders.EditBookFormLoader;
 import ee.ivkhkdev.nptv23javafx.loaders.MenuFormLoader;
 import ee.ivkhkdev.nptv23javafx.loaders.SelectedBookFromModalityLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
+import ee.ivkhkdev.nptv23javafx.security.Role;
 import ee.ivkhkdev.nptv23javafx.security.SessionManager;
-import ee.ivkhkdev.nptv23javafx.service.HistoryService;
+import ee.ivkhkdev.nptv23javafx.interfaces.HistoryService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -28,7 +29,7 @@ public class MainFormController implements Initializable {
     private final SelectedBookFromModalityLoader selectedBookFromModalityLoader;
     private final BookService bookService;
     private final HistoryService historyService;
-    private SessionManager sessionManager;
+    private final SessionManager sessionManager;
     @FXML private VBox vbMainFormRoot;
     @FXML private TableView<Book> tvListBooks;
     @FXML private TableColumn<Book, String> tcId;
@@ -87,7 +88,8 @@ public class MainFormController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Book> observable, Book oldValue, Book newValue) {
                 if (newValue != null) {
-                    if(sessionManager.getCurrentUser().getRoles().contains("MANAGER")){
+                    if(sessionManager.getCurrentUser().getRoles().contains(Role.MANAGER.toString())
+                        || sessionManager.getCurrentUser().getRoles().contains(Role.ADMINISTRATOR.toString())){
                         hbEditBook.setVisible(true);
                     }else{
                         hbEditBook.setVisible(false);

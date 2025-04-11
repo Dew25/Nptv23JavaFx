@@ -12,7 +12,7 @@ public class History {
     private Long id;
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     private AppUser appUser;
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE} , fetch = FetchType.EAGER)
     private Book book;
     @Temporal(TemporalType.DATE)
     private LocalDate takeOnDate;

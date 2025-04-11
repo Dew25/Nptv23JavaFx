@@ -2,8 +2,6 @@ package ee.ivkhkdev.nptv23javafx.service;
 
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
-import ee.ivkhkdev.nptv23javafx.model.entity.Session;
-import ee.ivkhkdev.nptv23javafx.model.repository.AppUserRepository;
 import ee.ivkhkdev.nptv23javafx.model.repository.BookRepository;
 import ee.ivkhkdev.nptv23javafx.model.repository.HistoryRepository;
 import ee.ivkhkdev.nptv23javafx.security.Role;
@@ -20,15 +18,14 @@ import java.util.Optional;
 @Service
 public class HistoryService implements ee.ivkhkdev.nptv23javafx.interfaces.HistoryService {
 private final HistoryRepository historyRepository;
-    private final BookRepository bookRepository;
-    private final SessionManager sessionManager;
+private final BookRepository bookRepository;
+   private final SessionManager sessionManager;
     private Role role;
 
 
     public HistoryService(HistoryRepository historyRepository, BookRepository bookRepository, SessionManager sessionManager) {
         this.historyRepository = historyRepository;
         this.bookRepository = bookRepository;
-
         this.sessionManager = sessionManager;
     }
     @Transactional
@@ -40,6 +37,7 @@ private final HistoryRepository historyRepository;
             }
             //Уменьшаем число книг в библиотеке на 1
             history.getBook().setCount(history.getBook().getCount() - 1);
+            bookRepository.save(history.getBook());
             return Optional.of(historyRepository.save(history));
         }else{
             return Optional.empty();
@@ -80,7 +78,7 @@ private final HistoryRepository historyRepository;
         if(sessionManager.isLoggedIn() || sessionManager.getCurrentUser().getRoles().contains(Role.USER.toString())){}
         List<History> listHistory = historyRepository.findByBook_IdAndAppUser_IdAndReturnDate(book.getId(), sessionManager.getCurrentUser().getId(), null);
         for (History history : listHistory) {
-            if (history.getReturnDate() == null && history.getBook().getQuantity() > history.getBook().getCount()){
+            if (history.getBook().getCount() < history.getBook().getQuantity()){
                 history.setReturnDate(LocalDate.now());
                 history.getBook().setCount(history.getBook().getCount() + 1);
                 historyRepository.save(history);

@@ -2,7 +2,7 @@ package ee.ivkhkdev.nptv23javafx.controllers;
 
 import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
-import ee.ivkhkdev.nptv23javafx.service.HistoryService;
+import ee.ivkhkdev.nptv23javafx.interfaces.HistoryService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
@@ -15,8 +15,8 @@ import java.util.ResourceBundle;
 
 @Component
 public class ListTakedBooksFormController implements Initializable {
-    private MainFormLoader mainFormLoader;
-    private HistoryService historyService;
+    private final MainFormLoader mainFormLoader;
+    private final HistoryService historyService;
     @FXML private ListView<History> lvTackedBookRoot;
 
     public ListTakedBooksFormController(MainFormLoader mainFormLoader, HistoryService historyService) {
