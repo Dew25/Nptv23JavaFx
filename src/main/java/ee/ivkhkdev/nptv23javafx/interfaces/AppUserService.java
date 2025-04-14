@@ -10,8 +10,6 @@ import java.util.Optional;
 
 public interface AppUserService extends AppService<AppUser> {
     void initSuperUser();
-    ObservableList<AppUser> getObservableList();
-
     void addRole(AppUser appdateUser,Role role);
     void removeRole(AppUser appdateUser,Role role);
 }

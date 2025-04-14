@@ -9,15 +9,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vbAuthorFormRoot" prefHeight="379.0" prefWidth="628.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controllers.NewBookFormController">
+<VBox fx:id="vbAuthorFormRoot" prefHeight="379.0" prefWidth="628.0" spacing="3.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controllers.NewBookFormController">
    <children>
-      <Label alignment="BOTTOM_CENTER" prefHeight="59.0" prefWidth="600.0" text="Новая книга">
+      <Label alignment="BOTTOM_CENTER" prefHeight="46.0" prefWidth="600.0" text="Новая книга">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lbInfo" alignment="CENTER" prefHeight="28.0" prefWidth="628.0" />
-      <HBox prefHeight="28.0" prefWidth="600.0">
+      <Label fx:id="lbInfo" alignment="CENTER" prefHeight="20.0" prefWidth="628.0" />
+      <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="600.0">
          <children>
             <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Название">
                <HBox.margin>
@@ -37,7 +37,7 @@
             <ListView fx:id="lvAuthors" prefHeight="98.0" prefWidth="309.0" />
          </children>
       </HBox>
-      <HBox layoutX="10.0" layoutY="99.0" prefHeight="28.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="99.0" prefHeight="28.0" prefWidth="600.0">
          <children>
             <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Год публикации">
                <HBox.margin>
@@ -47,7 +47,7 @@
             <TextField fx:id="tfPublicationYear" prefHeight="25.0" prefWidth="174.0" />
          </children>
       </HBox>
-      <HBox layoutX="10.0" layoutY="239.0" prefHeight="28.0" prefWidth="600.0">
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="239.0" prefHeight="28.0" prefWidth="600.0">
          <children>
             <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Количество">
                <HBox.margin>
@@ -55,6 +55,17 @@
                </HBox.margin>
             </Label>
             <TextField fx:id="tfQuantity" prefHeight="25.0" prefWidth="76.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="281.0" prefHeight="28.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Обложка">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Label>
+            <Button fx:id="btChooseCoverImage" mnemonicParsing="false" onAction="#chooseCoverImage" prefHeight="26.0" prefWidth="123.0" text="Выбрать обложку" />
+            <Label fx:id="lbChooseCoverImage" text="Label" visible="false" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="127.0" prefHeight="58.0" prefWidth="600.0" spacing="5.0">

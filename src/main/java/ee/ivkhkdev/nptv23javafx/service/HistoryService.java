@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.service;
 
+import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
 import ee.ivkhkdev.nptv23javafx.model.repository.BookRepository;
@@ -48,6 +49,13 @@ private final BookRepository bookRepository;
     public List<History> getList() {
         if(sessionManager.isLoggedIn() || sessionManager.getCurrentUser().getRoles().contains(Role.USER.toString())){}
         return historyRepository.findAll();
+    }
+
+    @Override
+    public ObservableList<History> getObservableList() {
+        ObservableList<History> observableList = FXCollections.observableArrayList();
+        observableList.addAll(this.getList());
+        return observableList;
     }
 
     public ObservableList<History> getObservableTakenList() {

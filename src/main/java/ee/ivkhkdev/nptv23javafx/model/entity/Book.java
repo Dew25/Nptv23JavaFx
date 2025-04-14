@@ -1,12 +1,16 @@
 package ee.ivkhkdev.nptv23javafx.model.entity;
 
 import jakarta.persistence.*;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.aopalliance.intercept.MethodInterceptor;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import javafx.scene.image.Image;
+
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Arrays;
@@ -29,6 +33,9 @@ public class Book {
     private int publicationYear;
     private int quantity;
     private int count;
+    @Lob
+    @Column(name = "cover_image", columnDefinition = "BLOB")
+    private byte[] coverImage;
 
     public Book() {}
 
@@ -132,5 +139,18 @@ public class Book {
         return new SimpleStringProperty(authors);
     }
 
+    public Image getCoverImage() {
+        if (coverImage != null && coverImage.length > 0) {
+            return new Image(new ByteArrayInputStream(coverImage));
+        }
+        return null;
+    }
 
+    public void setCoverImage(File file){
+        try {
+            this.coverImage = Files.readAllBytes(file.toPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

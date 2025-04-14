@@ -19,6 +19,8 @@ public class AppUser {
     private String password;
     private String firstname;
     private String lastname;
+
+
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roles = new HashSet<>();
 

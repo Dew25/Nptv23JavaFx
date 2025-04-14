@@ -5,5 +5,5 @@ import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import javafx.collections.ObservableList;
 
 public interface AuthorService extends AppService<Author> {
-    ObservableList<Author> getObservableList();
+
 }

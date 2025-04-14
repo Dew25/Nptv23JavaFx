@@ -7,6 +7,7 @@ import ee.ivkhkdev.nptv23javafx.security.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,7 @@ public class SelectedBookFromModalityController implements Initializable {
     @FXML private VBox vbSelectedBookRoot;
     @FXML private Button btTakeOnBook;
     @FXML private Button btReturnBook;
+    @FXML private ImageView ivCoverBook;
     private Book book;
 
     public SelectedBookFromModalityController(SessionManager sessionManager, HistoryService historyService, MainFormController mainFormController) {
@@ -34,6 +36,7 @@ public class SelectedBookFromModalityController implements Initializable {
 
     public void setBook(Book book) {
         this.book = book;
+        this.ivCoverBook.setImage(book.getCoverImage());
     }
 
     @FXML
@@ -72,6 +75,11 @@ public class SelectedBookFromModalityController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ivCoverBook.setFitWidth(320);
+        ivCoverBook.setFitHeight(400);
+        ivCoverBook.setPreserveRatio(false);
+        ivCoverBook.setSmooth(true);
+
 
     }
 }

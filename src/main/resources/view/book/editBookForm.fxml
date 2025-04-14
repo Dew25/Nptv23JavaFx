@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="vbAuthorFormRoot" prefHeight="379.0" prefWidth="628.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controllers.EditBookFormController">
+<VBox fx:id="vbAuthorFormRoot" prefHeight="379.0" prefWidth="628.0" spacing="3.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ee.ivkhkdev.nptv23javafx.controllers.EditBookFormController">
    <children>
-      <Label alignment="CENTER" prefHeight="89.0" prefWidth="600.0" text="Изменение атрибутов книги">
+      <Label alignment="CENTER" prefHeight="62.0" prefWidth="600.0" text="Изменение атрибутов книги">
          <font>
             <Font size="18.0" />
          </font>
@@ -59,12 +59,23 @@
       </HBox>
       <HBox layoutX="10.0" layoutY="267.0" prefHeight="28.0" prefWidth="600.0">
          <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="В насиичии">
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="В наличии">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
             <TextField fx:id="tfCount" prefHeight="25.0" prefWidth="76.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="161.0" text="Обложка">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Label>
+            <Button fx:id="btChooseCoverImage" mnemonicParsing="false" onAction="#chooseCoverImage" prefHeight="26.0" prefWidth="123.0" text="Выбрать обложку" />
+            <Label fx:id="lbChooseCoverImage" text="Label" visible="false" />
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="127.0" prefHeight="58.0" prefWidth="600.0" spacing="5.0">
