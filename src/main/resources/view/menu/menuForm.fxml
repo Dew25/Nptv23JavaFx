@@ -27,6 +27,7 @@
           <Menu fx:id="mAdmin" mnemonicParsing="false" text="Administrator">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#showAdminPanelForm" text="Панель администратора" />
+                  <MenuItem mnemonicParsing="false" onAction="#showBookReadingRatinForm" text="Рейтинг читаемости" />
                </items>
           </Menu>
         </menus>

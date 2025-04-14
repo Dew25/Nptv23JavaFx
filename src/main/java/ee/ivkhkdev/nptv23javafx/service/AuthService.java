@@ -1,12 +1,10 @@
 package ee.ivkhkdev.nptv23javafx.service;
 
 import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
-import ee.ivkhkdev.nptv23javafx.model.entity.Session;
 import ee.ivkhkdev.nptv23javafx.model.repository.AppUserRepository;
 import ee.ivkhkdev.nptv23javafx.security.SessionManager;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service

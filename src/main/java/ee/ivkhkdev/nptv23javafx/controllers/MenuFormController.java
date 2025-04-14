@@ -23,6 +23,7 @@ public class MenuFormController implements Initializable {
     private final ListAuthorsFormLoader listAuthorsFormLoader;
     private final ProfileFormLoader profileFormLoader;
     private final AdminPanelFormLoader adminPanelFormLoader;
+    private final BookReadingRatingFormLoader readingRatingFormLoader;
 
     private final SessionManager sessionManager;
     private Parent rootMenuForm;
@@ -35,7 +36,7 @@ public class MenuFormController implements Initializable {
     @FXML private MenuItem miLogout;
 
 
-    public MenuFormController(AuthorFormLoader authorFormLoader, SessionManager sessionManager, NewBookFormLoader newBookFormLoader, LoginFormLoader loginFormLoader, TackeBookFormLoader tackeBookFormLoader, ListAuthorsFormLoader listAuthorsFormLoader, ProfileFormLoader profileFormLoader, AdminPanelFormLoader adminPanelFormLoader) {
+    public MenuFormController(AuthorFormLoader authorFormLoader, SessionManager sessionManager, NewBookFormLoader newBookFormLoader, LoginFormLoader loginFormLoader, TackeBookFormLoader tackeBookFormLoader, ListAuthorsFormLoader listAuthorsFormLoader, ProfileFormLoader profileFormLoader, AdminPanelFormLoader adminPanelFormLoader, BookReadingRatingFormLoader readingRatingFormLoader) {
         this.authorFormLoader = authorFormLoader;
         this.sessionManager = sessionManager;
         this.newBookFormLoader = newBookFormLoader;
@@ -44,6 +45,7 @@ public class MenuFormController implements Initializable {
         this.listAuthorsFormLoader = listAuthorsFormLoader;
         this.profileFormLoader = profileFormLoader;
         this.adminPanelFormLoader = adminPanelFormLoader;
+        this.readingRatingFormLoader = readingRatingFormLoader;
     }
 
     @FXML private void showAuthorForm(){
@@ -71,6 +73,9 @@ public class MenuFormController implements Initializable {
     }
     @FXML private void showAdminPanelForm(){
         adminPanelFormLoader.load();
+    }
+    @FXML private void showBookReadingRatinForm(){
+        readingRatingFormLoader.load();
     }
     private void initMenuVisible(){
         if(sessionManager.isLoggedIn()){
