@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.controllers;
 
+import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
 import ee.ivkhkdev.nptv23javafx.rating.BookRatingViewModel;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @Component
 public class BookReadingRatingFormController implements Initializable {
     private final HistoryService historyService;
+    private final MainFormLoader mainFormLoader;
     @FXML
     private ComboBox<Integer> cbDayBefore;
     @FXML
@@ -47,8 +49,13 @@ public class BookReadingRatingFormController implements Initializable {
     @FXML
     private TableColumn<BookRatingViewModel, String> tcRating;
 
-    public BookReadingRatingFormController(HistoryService historyService) {
+    public BookReadingRatingFormController(HistoryService historyService, MainFormLoader mainFormLoader) {
         this.historyService = historyService;
+        this.mainFormLoader = mainFormLoader;
+    }
+    @FXML
+    private void goToMainForm(){
+        mainFormLoader.load();
     }
 
     @FXML
