@@ -10,9 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -25,17 +23,11 @@ public class BookReadingRatingFormController implements Initializable {
     private final HistoryService historyService;
     private final MainFormLoader mainFormLoader;
     @FXML
-    private ComboBox<Integer> cbDayBefore;
+    private Label lbInfo;
     @FXML
-    private ComboBox<Integer> cbDayAfter;
+    private DatePicker dpBeforeDate;
     @FXML
-    private ComboBox<Integer> cbMonthBefore;
-    @FXML
-    private ComboBox<Integer> cbMonthAfter;
-    @FXML
-    private ComboBox<Integer> cbYearBefore;
-    @FXML
-    private ComboBox<Integer> cbYearAfter;
+    private DatePicker dpAfterDate;
     @FXML
     private TableView<BookRatingViewModel> tvBookRatingView;
     @FXML
@@ -60,88 +52,19 @@ public class BookReadingRatingFormController implements Initializable {
 
     @FXML
     private void calculateRating() {
-        if (cbYearBefore.getSelectionModel().getSelectedIndex() != -1
-                && cbYearAfter.getSelectionModel().getSelectedIndex() != -1
-                && cbMonthBefore.getSelectionModel().getSelectedIndex() != -1
-                && cbMonthAfter.getSelectionModel().getSelectedIndex() != -1
-                && cbDayBefore.getSelectionModel().getSelectedIndex() != -1
-                && cbDayAfter.getSelectionModel().getSelectedIndex() != -1) {
-            tvBookRatingView.setItems(
-                    FXCollections.observableArrayList(
-                            historyService.getRating(
-                                    cbYearBefore.getSelectionModel(),
-                                    cbYearAfter.getSelectionModel(),
-                                    cbMonthBefore.getSelectionModel(),
-                                    cbMonthAfter.getSelectionModel(),
-                                    cbDayBefore.getSelectionModel(),
-                                    cbDayAfter.getSelectionModel())
-                    )
-            );
-        }else if(cbYearBefore.getSelectionModel().getSelectedIndex() != -1
-                    && cbYearAfter.getSelectionModel().getSelectedIndex() != -1
-                    && cbMonthBefore.getSelectionModel().getSelectedIndex() != -1
-                    && cbMonthAfter.getSelectionModel().getSelectedIndex() != -1
-                    && cbDayBefore.getSelectionModel().getSelectedIndex() == -1
-                    && cbDayAfter.getSelectionModel().getSelectedIndex() == -1) {
-                tvBookRatingView.setItems(
-                        FXCollections.observableArrayList(
-                                historyService.getRating(
-                                        cbYearBefore.getSelectionModel(),
-                                        cbYearAfter.getSelectionModel(),
-                                        cbMonthBefore.getSelectionModel(),
-                                        cbMonthAfter.getSelectionModel()
-                                )
-                        )
-                );
-        } else if (cbYearBefore.getSelectionModel().getSelectedIndex() != -1
-                    && cbYearAfter.getSelectionModel().getSelectedIndex() != -1
-                    && cbMonthBefore.getSelectionModel().getSelectedIndex() != -1
-                    && cbMonthAfter.getSelectionModel().getSelectedIndex() != -1
-                    && cbDayBefore.getSelectionModel().getSelectedIndex() == -1
-                    && cbDayAfter.getSelectionModel().getSelectedIndex() == -1) {
-                tvBookRatingView.setItems(
-                        FXCollections.observableArrayList(
-                                historyService.getRating(
-                                        cbYearBefore.getSelectionModel(),
-                                        cbYearAfter.getSelectionModel(),
-                                        cbMonthBefore.getSelectionModel(),
-                                        cbMonthAfter.getSelectionModel()
-                                )
-                        )
-                );
-
-        } else if (cbYearBefore.getSelectionModel().getSelectedIndex() != -1
-                    && cbYearAfter.getSelectionModel().getSelectedIndex() != -1
-                    && cbMonthBefore.getSelectionModel().getSelectedIndex() == -1
-                    && cbMonthAfter.getSelectionModel().getSelectedIndex() == -1
-                    && cbDayBefore.getSelectionModel().getSelectedIndex() == -1
-                    && cbDayAfter.getSelectionModel().getSelectedIndex() == -1) {
-                tvBookRatingView.setItems(
-                        FXCollections.observableArrayList(
-                                historyService.getRating(
-                                        cbYearBefore.getSelectionModel(),
-                                        cbYearAfter.getSelectionModel()
-                                )
-                        )
-                );
-            }
+        LocalDate from = dpBeforeDate.getValue();
+        LocalDate to = dpAfterDate.getValue();
+        if (from == null || to == null) {
+            lbInfo.setText("Пожалуйста, выберите обе даты.");
+            return;
+        }
+        lbInfo.setText("Выберите диапазон дат");
+        tvBookRatingView.setItems(FXCollections.observableArrayList(historyService.getRating(from,to)));
     }
 
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle){
-        for (int i = 1; i <= 31; i++) {
-            cbDayBefore.getItems().add(i);
-            cbDayAfter.getItems().add(i);
-        }
-        for (int i = 1; i <= 12; i++) {
-            cbMonthBefore.getItems().add(i);
-            cbMonthAfter.getItems().add(i);
-        }
-        for (int i = 0; i <= 2; i++) {
-            Integer year = LocalDate.now().getYear();
-            cbYearBefore.getItems().add(year - i);
-            cbYearAfter.getItems().add(year - i);
-        }
+        //Настраиваем отображение столбцов в таблице
         tcId.setCellValueFactory(sellData -> new SimpleStringProperty(sellData.getValue().getBook().getId().toString()));
         tcTitle.setCellValueFactory(sellData -> new SimpleStringProperty(sellData.getValue().getTitle()));
         tcAuthors.setCellValueFactory(cellData -> {
@@ -152,6 +75,17 @@ public class BookReadingRatingFormController implements Initializable {
         });
         tcPublishedYear.setCellValueFactory(sellData -> new SimpleStringProperty(((Integer) sellData.getValue().getBook().getPublicationYear()).toString()));
         tcRating.setCellValueFactory(sellData -> new SimpleStringProperty(sellData.getValue().getCount().toString()));
+        //Настраиваем отображение даты в даты pfAfterDate
+        dpAfterDate.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (dpBeforeDate.getValue() != null && item.isBefore(dpBeforeDate.getValue())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;");
+                }
+            }
+        });
     }
 
 

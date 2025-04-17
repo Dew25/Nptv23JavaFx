@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.SingleSelectionModel;
 import org.springframework.stereotype.Service;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
@@ -73,93 +74,8 @@ private final BookRepository bookRepository;
     }
 
     @Override
-    public List<BookRatingViewModel> getRating(
-                       SingleSelectionModel<Integer> selectionDayBefore,
-                       SingleSelectionModel<Integer> selectionDayAfter,
-                       SingleSelectionModel<Integer> selectionMonthBefore,
-                       SingleSelectionModel<Integer> selectionMonthAfter,
-                       SingleSelectionModel<Integer> selectionYearBefore,
-                       SingleSelectionModel<Integer> selectionYearAfter) {
-        // Получаем начальную дату
-        LocalDate dateBefore = LocalDate.of(
-                selectionYearBefore.getSelectedItem(),
-                selectionMonthBefore.getSelectedItem(),
-                selectionDayBefore.getSelectedItem()
-        );
-
-        // Получаем конечную дату
-        LocalDate dateAfter = LocalDate.of(
-                selectionYearAfter.getSelectedItem(),
-                selectionMonthAfter.getSelectedItem(),
-                selectionDayAfter.getSelectedItem()
-        );
-        List<History> results = historyRepository.findByTakeOnDateBetween(dateBefore, dateAfter);
-        Map<Book, Integer> map = new HashMap<>();
-        for(History history : results){
-            Book book = history.getBook();
-            map.put(book, map.getOrDefault(book, 0) + 1);
-        }
-        List<BookRatingViewModel> ratingList = map.entrySet().stream()
-                .map(entry ->new BookRatingViewModel(entry.getKey(),entry.getValue()))
-                .sorted(Comparator.comparing(BookRatingViewModel::getCount).reversed())
-                .collect(Collectors.toList());
-        return ratingList;
-    }
-
-    @Override
-    public List<BookRatingViewModel> getRating(
-            SingleSelectionModel<Integer> selectionMonthBefore,
-            SingleSelectionModel<Integer> selectionMonthAfter,
-            SingleSelectionModel<Integer> selectionYearBefore,
-            SingleSelectionModel<Integer> selectionYearAfter) {
-        // Начальная дата — первое число месяца
-        LocalDate dateBefore = LocalDate.of(
-                selectionYearBefore.getSelectedItem(),
-                selectionMonthBefore.getSelectedItem(),
-                1
-        );
-
-        // Конечная дата — последнее число месяца
-        YearMonth yearMonthAfter = YearMonth.of(
-                selectionYearAfter.getSelectedItem(),
-                selectionMonthAfter.getSelectedItem()
-        );
-        LocalDate dateAfter = yearMonthAfter.atEndOfMonth();
-
-        // Получение списка
-        List<History> results = historyRepository.findByTakeOnDateBetween(dateBefore, dateAfter);
-
-        Map<Book, Integer> map = new HashMap<>();
-        for(History history : results){
-            Book book = history.getBook();
-            map.put(book, map.getOrDefault(book, 0) + 1);
-        }
-        List<BookRatingViewModel> ratingList = map.entrySet().stream()
-                .map(entry ->new BookRatingViewModel(entry.getKey(),entry.getValue()))
-                .sorted(Comparator.comparing(BookRatingViewModel::getCount).reversed())
-                .collect(Collectors.toList());
-        return ratingList;
-    }
-
-    @Override
-    public List<BookRatingViewModel> getRating(SingleSelectionModel<Integer> selectionYearBefore,
-                                             SingleSelectionModel<Integer> selectionYearAfter) {
-        int yearFrom = selectionYearBefore.getSelectedItem();
-        int yearTo = selectionYearAfter.getSelectedItem();
-
-        // Гарантируем, что дата "с" меньше или равна дате "по"
-        if (yearFrom > yearTo) {
-            int temp = yearFrom;
-            yearFrom = yearTo;
-            yearTo = temp;
-        }
-
-        // Начало первого года
-        LocalDate dateBefore = LocalDate.of(yearFrom, 1, 1);
-
-        // Конец последнего года
-        LocalDate dateAfter = LocalDate.of(yearTo, 12, 31);
-        List<History> results = historyRepository.findByTakeOnDateBetween(dateBefore, dateAfter);
+    public List<BookRatingViewModel> getRating(LocalDate from, LocalDate to) {
+        List<History> results = historyRepository.findByTakeOnDateBetween(from, to);
         Map<Book, Integer> map = new HashMap<>();
         for(History history : results){
             Book book = history.getBook();

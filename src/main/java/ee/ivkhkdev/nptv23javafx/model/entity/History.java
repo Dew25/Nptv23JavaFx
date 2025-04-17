@@ -14,9 +14,7 @@ public class History {
     private AppUser appUser;
     @ManyToOne(cascade = {CascadeType.MERGE} , fetch = FetchType.EAGER)
     private Book book;
-    @Temporal(TemporalType.DATE)
     private LocalDate takeOnDate;
-    @Temporal(TemporalType.DATE)
     private LocalDate returnDate;
 
     public History() {

@@ -6,29 +6,12 @@ import ee.ivkhkdev.nptv23javafx.rating.BookRatingViewModel;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SingleSelectionModel;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface HistoryService extends AppService<History> {
     boolean isReadingBook(Book book);
     boolean returnBook(Book book);
     public ObservableList<History> getObservableTakenList();
-    public List<BookRatingViewModel> getRating(
-            SingleSelectionModel<Integer> selectionDayBefore,
-            SingleSelectionModel<Integer> selectionDayAfter,
-            SingleSelectionModel<Integer> selectionMonthBefore,
-            SingleSelectionModel<Integer> selectionMonthAfter,
-            SingleSelectionModel<Integer> selectionYearBefore,
-            SingleSelectionModel<Integer> selectionYearAfter
-    );
-   public List<BookRatingViewModel> getRating(
-            SingleSelectionModel<Integer> selectionMonthBefore,
-            SingleSelectionModel<Integer> selectionMonthAfter,
-            SingleSelectionModel<Integer> selectionYearBefore,
-            SingleSelectionModel<Integer> selectionYearAfter
-    );
-   public List<BookRatingViewModel> getRating(
-            SingleSelectionModel<Integer> selectionYearBefore,
-            SingleSelectionModel<Integer> selectionYearAfter
-    );
-
+    public List<BookRatingViewModel> getRating(LocalDate from, LocalDate to);
 }
