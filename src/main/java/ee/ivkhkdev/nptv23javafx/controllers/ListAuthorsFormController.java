@@ -9,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -24,7 +23,6 @@ public class ListAuthorsFormController implements Initializable {
     private final AuthorService authorService;
     @FXML private ListView<Author> lvAuthors;
     @FXML private ListView<Book> lvAuthorBooks;
-    @FXML private Label lbInfo;
     @FXML private VBox vbListSelectedAuthorsBooks;
 
     public ListAuthorsFormController(AuthorService authorService, MainFormLoader mainFormLoader, SelectedAuthorFormModalityLoader selectedAuthorFormModalityLoader) {

@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 @Component
 public class SelectedBookFromModalityController implements Initializable {
 
-    private SessionManager sessionManager;
+    private final SessionManager sessionManager;
     private final HistoryService historyService;
     private final MainFormController mainFormController;
     @FXML private VBox vbSelectedBookRoot;

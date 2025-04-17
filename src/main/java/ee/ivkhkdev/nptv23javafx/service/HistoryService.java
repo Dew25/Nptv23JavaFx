@@ -1,7 +1,5 @@
 package ee.ivkhkdev.nptv23javafx.service;
 
-import ee.ivkhkdev.nptv23javafx.controllers.BookReadingRatingFormController;
-import ee.ivkhkdev.nptv23javafx.model.entity.AppUser;
 import ee.ivkhkdev.nptv23javafx.model.entity.Book;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
 import ee.ivkhkdev.nptv23javafx.model.repository.BookRepository;
@@ -25,9 +23,7 @@ import java.util.stream.Collectors;
 public class HistoryService implements ee.ivkhkdev.nptv23javafx.interfaces.HistoryService {
 private final HistoryRepository historyRepository;
 private final BookRepository bookRepository;
-   private final SessionManager sessionManager;
-    private Role role;
-
+    private final SessionManager sessionManager;
 
     public HistoryService(HistoryRepository historyRepository, BookRepository bookRepository, SessionManager sessionManager) {
         this.historyRepository = historyRepository;

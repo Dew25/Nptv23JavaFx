@@ -1,5 +1,6 @@
 package ee.ivkhkdev.nptv23javafx.controllers;
 
+import ch.qos.logback.core.encoder.JsonEscapeUtil;
 import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
 import ee.ivkhkdev.nptv23javafx.model.entity.History;
 import ee.ivkhkdev.nptv23javafx.interfaces.HistoryService;
@@ -8,10 +9,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import org.springframework.stereotype.Component;
-
+import java.util.ResourceBundle;
 import java.net.URL;
 
-import java.util.ResourceBundle;
 
 @Component
 public class ListTakedBooksFormController implements Initializable {
@@ -48,5 +48,6 @@ public class ListTakedBooksFormController implements Initializable {
                 }
             }
         });
+
     }
 }

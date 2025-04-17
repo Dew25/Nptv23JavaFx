@@ -1,13 +1,12 @@
 package ee.ivkhkdev.nptv23javafx.controllers;
 
 import ee.ivkhkdev.nptv23javafx.loaders.MainFormLoader;
-import ee.ivkhkdev.nptv23javafx.model.entity.Book;
-import ee.ivkhkdev.nptv23javafx.model.entity.History;
+
 import ee.ivkhkdev.nptv23javafx.rating.BookRatingViewModel;
 import ee.ivkhkdev.nptv23javafx.service.HistoryService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
