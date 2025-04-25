@@ -28,7 +28,7 @@ public class MainFormLoader extends AbstractFormLoader{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        getPrimaryStage().setOnCloseRequest(this::handle);
+        getPrimaryStage().setOnCloseRequest(this::closeWindow);
         Scene scene = new Scene(root);
         getPrimaryStage().setScene(scene);
         getPrimaryStage().setTitle("Nptv23JavaFX Библиотека");
